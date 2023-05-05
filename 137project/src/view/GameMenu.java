@@ -28,7 +28,7 @@ public class GameMenu {
 	public static final double WINDOW_WIDTH = screenBounds.getWidth();
 	private static final double BUTTON_OFFSET = 20.0;
 	private static final double MENU_STARTX = WINDOW_WIDTH/8.0;
-	private final Image logo = new Image("/model/resources/logo_wo_bg.png", 500, 500, false,false);
+	private final Image logo = new Image("/view/resources/logo_wo_bg.png", 500, 500, false,false);
 	private AnchorPane pane;
 	private Scene scene;
 	private Stage stage;

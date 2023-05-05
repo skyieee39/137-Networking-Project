@@ -97,25 +97,31 @@ public class GameMenu {
 		menuBox.setLayoutY(WINDOW_HEIGHT/2 - menuBoxHeight);
 		pane.getChildren().add(menuBox);
 	}
+	
 	private void initMenuButtons(HarFreButton btn) {
 		menuBtns.add(btn);
 	}
+	
 	private void initStartButton() {
 		HarFreButton startbtn = new HarFreButton("START GAME");
 		initMenuButtons(startbtn);
 	}
+	
 	private void initInstructionButton() {
 		HarFreButton instructbtn = new HarFreButton("INSTRUCTIONS");
 		initMenuButtons(instructbtn);
 	}
+	
 	private void initAboutButton() {
 		HarFreButton aboutbtn = new HarFreButton("ABOUT");
 		initMenuButtons(aboutbtn);
 	}
+	
 	private void initHelpButton() {
 		HarFreButton helpbtn = new HarFreButton("HELP");
 		initMenuButtons(helpbtn);
 	}
+	
 	private void initExitButton() {
 		HarFreButton exitbtn = new HarFreButton("EXIT");
 		initMenuButtons(exitbtn);

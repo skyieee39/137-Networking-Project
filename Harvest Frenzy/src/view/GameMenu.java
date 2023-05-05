@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -21,20 +20,22 @@ import model.HarFreButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.CloudTimer;
+
 public class GameMenu {
 
 	public static final Rectangle2D screenBounds = Screen.getPrimary().getBounds();
 	public static final double WINDOW_HEIGHT = screenBounds.getHeight();
 	public static final double WINDOW_WIDTH = screenBounds.getWidth();
-	private static final double BUTTON_OFFSET = 20.0;
-	private static final double MENU_STARTX = WINDOW_WIDTH/8.0;
-	private final Image logo = new Image("/view/resources/logo_wo_bg.png", 500, 500, false,false);
+	public static final double BUTTON_OFFSET = 20.0;
+	public static final double MENU_STARTX = WINDOW_WIDTH/8.0;
 	private AnchorPane pane;
 	private Scene scene;
 	private Stage stage;
 	private Canvas canvas;
 	private GraphicsContext gc;
 	private VBox menuBox;
+	private CloudTimer cloudtimer;
 	List<HarFreButton> menuBtns;
 
 	//the class constructor
@@ -44,15 +45,12 @@ public class GameMenu {
 		scene = new Scene(pane, WINDOW_WIDTH, WINDOW_HEIGHT);
 		canvas = new Canvas(WINDOW_WIDTH,WINDOW_HEIGHT);
 		gc = canvas.getGraphicsContext2D();
+		this.cloudtimer = new CloudTimer(this.gc);
 
 	}
 
 	//method to add the stage elements
 	public void setStage(Stage stage) {
-		this.gc.drawImage(this.logo, (WINDOW_WIDTH - MENU_STARTX) - 500/2, 0);
-		//set stage elements here
-		pane.getChildren().add(this.canvas);
-		createMenuButtons();
 		this.stage = stage;
 		this.stage.setTitle("Harvest Frenzy");
 		this.stage.setScene(this.scene);
@@ -70,6 +68,11 @@ public class GameMenu {
                     stage.setFullScreen(true);
             }
         });
+
+		cloudtimer.start();
+		pane.getChildren().add(this.canvas);
+		createMenuButtons();
+		createBackground();
 		this.stage.show();
 	}
 
@@ -97,31 +100,25 @@ public class GameMenu {
 		menuBox.setLayoutY(WINDOW_HEIGHT/2 - menuBoxHeight);
 		pane.getChildren().add(menuBox);
 	}
-	
 	private void initMenuButtons(HarFreButton btn) {
 		menuBtns.add(btn);
 	}
-	
 	private void initStartButton() {
 		HarFreButton startbtn = new HarFreButton("START GAME");
 		initMenuButtons(startbtn);
 	}
-	
 	private void initInstructionButton() {
 		HarFreButton instructbtn = new HarFreButton("INSTRUCTIONS");
 		initMenuButtons(instructbtn);
 	}
-	
 	private void initAboutButton() {
 		HarFreButton aboutbtn = new HarFreButton("ABOUT");
 		initMenuButtons(aboutbtn);
 	}
-	
 	private void initHelpButton() {
 		HarFreButton helpbtn = new HarFreButton("HELP");
 		initMenuButtons(helpbtn);
 	}
-	
 	private void initExitButton() {
 		HarFreButton exitbtn = new HarFreButton("EXIT");
 		initMenuButtons(exitbtn);
@@ -143,5 +140,15 @@ public class GameMenu {
 				}
 			});
 		}
+	}
+
+	// Set Background
+	private void createBackground() {
+		pane.setStyle(
+				"-fx-background-image: url(" +
+	                "'/view/resources/night_sky.png'" +
+	            "); " +
+	            "-fx-background-size: cover;"
+	       );
 	}
 }

@@ -38,16 +38,7 @@ public class GameStage {
 		this.stage.setTitle("Harvest Frenzy");
 		this.stage.setScene(this.scene);
 		// For Full Screen
-		this.stage.setFullScreen(true);
-		this.stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-		this.stage.fullScreenProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable,
-                    Boolean oldValue, Boolean newValue) {
-                if(newValue != null && !newValue.booleanValue())
-                    stage.setFullScreen(true);
-            }
-        });
+		setFullScreen();
 
 		this.renderImages();
 
@@ -56,6 +47,24 @@ public class GameStage {
 
 	public void renderImages() {
 		this.player1.render(this.gc);
+	}
+
+	private void setFullScreen() {
+		if (GameMenu.fullscreen) {
+			stage.setFullScreen(true);
+			stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+			stage.fullScreenProperty().addListener(new ChangeListener<Boolean>() {
+
+	            @Override
+	            public void changed(ObservableValue<? extends Boolean> observable,
+	                    Boolean oldValue, Boolean newValue) {
+	                if(newValue != null && !newValue.booleanValue())
+	                    stage.setFullScreen(true);
+	            }
+	        });
+		} else {
+			stage.setFullScreen(false);
+		}
 	}
 
 }

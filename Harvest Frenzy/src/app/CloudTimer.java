@@ -32,6 +32,6 @@ public class CloudTimer extends AnimationTimer {
 		this.clouda.render(this.gc);
 		this.cloudb.render(this.gc);
 		this.cloudc.render(this.gc);
-		this.gc.drawImage(this.logo, (GameMenu.WINDOW_WIDTH - GameMenu.MENU_STARTX) - 500/2, 0);
+		this.gc.drawImage(this.logo, GameMenu.WINDOW_WIDTH - 500, 0);
 	}
 }

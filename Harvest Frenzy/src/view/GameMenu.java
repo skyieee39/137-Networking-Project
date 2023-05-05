@@ -29,6 +29,7 @@ public class GameMenu {
 	public static final double WINDOW_WIDTH = screenBounds.getWidth();
 	public static final double BUTTON_OFFSET = 20.0;
 	public static final double MENU_STARTX = WINDOW_WIDTH/8.0;
+	public static boolean fullscreen = true;
 	private AnchorPane pane;
 	private Scene scene;
 	private Stage stage;
@@ -57,17 +58,7 @@ public class GameMenu {
 
 		// For Full Screen
 		this.stage.initStyle(StageStyle.UNDECORATED);
-		this.stage.setFullScreen(true);
-		this.stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-		this.stage.fullScreenProperty().addListener(new ChangeListener<Boolean>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable,
-                    Boolean oldValue, Boolean newValue) {
-                if(newValue != null && !newValue.booleanValue())
-                    stage.setFullScreen(true);
-            }
-        });
+		setFullScreen();
 
 		cloudtimer.start();
 		pane.getChildren().add(this.canvas);
@@ -150,5 +141,24 @@ public class GameMenu {
 	            "); " +
 	            "-fx-background-size: cover;"
 	       );
+	}
+
+	// Set Fullscreen
+	private void setFullScreen() {
+		if (fullscreen) {
+			stage.setFullScreen(true);
+			stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+			stage.fullScreenProperty().addListener(new ChangeListener<Boolean>() {
+
+	            @Override
+	            public void changed(ObservableValue<? extends Boolean> observable,
+	                    Boolean oldValue, Boolean newValue) {
+	                if(newValue != null && !newValue.booleanValue())
+	                    stage.setFullScreen(true);
+	            }
+	        });
+		} else {
+			stage.setFullScreen(false);
+		}
 	}
 }

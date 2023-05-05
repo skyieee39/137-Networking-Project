@@ -1,14 +1,18 @@
 package view;
 
+//import javafx.animation.PauseTransition;
+//import javafx.event.ActionEvent;
+//import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import elements.Player;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
+//import javafx.util.Duration;
+import javafx.stage.StageStyle;
 
 public class GameStage {
 
@@ -17,7 +21,6 @@ public class GameStage {
 	private Group root;
 	private Canvas canvas;
 	private GraphicsContext gc;
-	private Player player1;
 
 	//the class constructor
 	public GameStage() {
@@ -25,14 +28,13 @@ public class GameStage {
 		this.scene = new Scene(root, GameMenu.WINDOW_WIDTH,GameMenu.WINDOW_HEIGHT);
 		this.canvas = new Canvas(GameMenu.WINDOW_WIDTH,GameMenu.WINDOW_HEIGHT);
 		this.gc = canvas.getGraphicsContext2D();
-		this.player1 = new Player(500, 500);
 
 	}
 
 	//method to add the stage elements
 	public void setStage(Stage stage) {
 		this.stage = stage;
-		
+
 		//set stage elements here
 		this.root.getChildren().add(canvas);
 		this.stage.setTitle("Harvest Frenzy");
@@ -48,14 +50,7 @@ public class GameStage {
                     stage.setFullScreen(true);
             }
         });
-		
-		this.renderImages();
-	
 		this.stage.show();
-	}
-	
-	public void renderImages() {
-		this.player1.render(this.gc);
 	}
 
 }

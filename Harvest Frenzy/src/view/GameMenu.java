@@ -16,10 +16,8 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.HarFreButton;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import app.CloudTimer;
 
 public class GameMenu {

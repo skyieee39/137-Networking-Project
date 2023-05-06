@@ -2,7 +2,6 @@ package view;
 
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import elements.Player;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
@@ -17,7 +16,7 @@ public class GameStage {
 	private Group root;
 	private Canvas canvas;
 	private GraphicsContext gc;
-	private Player player1;
+	private GameTimer gametimer;
 
 	//the class constructor
 	public GameStage() {
@@ -25,28 +24,24 @@ public class GameStage {
 		this.scene = new Scene(root, GameMenu.WINDOW_WIDTH,GameMenu.WINDOW_HEIGHT);
 		this.canvas = new Canvas(GameMenu.WINDOW_WIDTH,GameMenu.WINDOW_HEIGHT);
 		this.gc = canvas.getGraphicsContext2D();
-		this.player1 = new Player(500, 500);
-
+		this.gametimer = new GameTimer(this.gc, this.scene);
 	}
 
-	//method to add the stage elements
+	// method to add the stage elements
 	public void setStage(Stage stage) {
 		this.stage = stage;
+		
+		this.gametimer.start();
 
-		//set stage elements here
+		// set stage elements here
 		this.root.getChildren().add(canvas);
 		this.stage.setTitle("Harvest Frenzy");
 		this.stage.setScene(this.scene);
-		// For Full Screen
+		
+		// for full screen
 		setFullScreen();
 
-		this.renderImages();
-
 		this.stage.show();
-	}
-
-	public void renderImages() {
-		this.player1.render(this.gc);
 	}
 
 	private void setFullScreen() {

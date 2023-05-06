@@ -7,10 +7,11 @@ public class Player extends Sprite {
 	private int score;
 	private boolean alive;
 
-	public final static Image PLAYER_IMAGE = new Image ("/model/resources/BUTTON_RELEASE.png", 128, 128, false, false);
+	public final static Image PLAYER_IMAGE = new Image ("/model/resources/Cart_Basket.png", 64, 64, false, false);
 
 	public Player(int xPos, int yPos) {
 		super(xPos, yPos);
+		this.loadImage(PLAYER_IMAGE);
 		this.name = "Player";
 		this.score = 0;
 		this.alive = true;

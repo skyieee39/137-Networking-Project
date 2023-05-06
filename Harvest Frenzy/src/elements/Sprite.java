@@ -6,13 +6,13 @@ import javafx.scene.image.Image;
 
 public class Sprite {
 	protected Image img; // image of the sprite
-	protected int x, y; // x, y positions of the sprite
+	protected double x, y; // x, y positions of the sprite
 	protected boolean visible; // flag if to render or not
 	protected double width;
 	protected double height;
 
 	// constructor
-	public Sprite(int xPos, int yPos){
+	public Sprite(double xPos, double yPos){
 		this.x = xPos;
 		this.y = yPos;
 		this.visible = true;
@@ -57,12 +57,12 @@ public class Sprite {
 
 	// getters
 	// method to get x position
-	public int getX() {
+	public double getX() {
     	return this.x;
 	}
 
 	// method to get y position
-	public int getY() {
+	public double getY() {
     	return this.y;
 	}
 
@@ -79,13 +79,13 @@ public class Sprite {
 
 	// setters
 	// sets x position
-	public void setX(int newX){
-		this.x = newX;
+	public void setX(double newX){
+		this.x += newX;
 	}
 
 	// sets y position
-	public void setY(int newY){
-		this.y = newY;
+	public void setY(double newY){
+		this.y += newY;
 	}
 
 	// sets sprite width

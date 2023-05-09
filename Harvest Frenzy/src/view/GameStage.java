@@ -4,9 +4,13 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 
 public class GameStage {
@@ -18,29 +22,32 @@ public class GameStage {
 	private GraphicsContext gc;
 	private GameTimer gametimer;
 
+	// List of keys to lock
+	public boolean keyJumpLock = false;
+
 	//the class constructor
 	public GameStage() {
 		this.root = new Group();
 		this.scene = new Scene(root, GameMenu.WINDOW_WIDTH,GameMenu.WINDOW_HEIGHT);
 		this.canvas = new Canvas(GameMenu.WINDOW_WIDTH,GameMenu.WINDOW_HEIGHT);
 		this.gc = canvas.getGraphicsContext2D();
-		this.gametimer = new GameTimer(this.gc, this.scene);
+		this.gametimer = new GameTimer(this.gc, this.scene, this);
 	}
 
 	// method to add the stage elements
 	public void setStage(Stage stage) {
 		this.stage = stage;
-		
+
 		this.gametimer.start();
 
 		// set stage elements here
 		this.root.getChildren().add(canvas);
 		this.stage.setTitle("Harvest Frenzy");
 		this.stage.setScene(this.scene);
-		
+
 		// for full screen
 		setFullScreen();
-
+		keyPressEvent();
 		this.stage.show();
 	}
 
@@ -62,4 +69,19 @@ public class GameStage {
 		}
 	}
 
+	private void keyPressEvent() {
+		this.scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent e) {
+				gametimer.movePlayer(e.getCode());
+			}
+		});
+
+		this.scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent e) {
+				gametimer.haltPlayer(e.getCode());
+			}
+		});
+	}
 }

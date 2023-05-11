@@ -9,7 +9,6 @@ public class Player extends Sprite {
 	public final static int MAX_JUMP_COUNT = 2;
 	private String name;
 	private int score;
-	private boolean alive;
 	private double veloX = 0;
 	private double veloY = 0;
 
@@ -25,12 +24,10 @@ public class Player extends Sprite {
 		loadImage(PLAYER_IMAGE);
 		name = "Player";
 		score = 0;
-		alive = true;
 	}
 
 	// THIS FUNCTION IS CALLED EVERY TIME THE HANDLE IS CALLED
 	public void frame() {
-		System.out.println("FRAME");
 		x += veloX;
 		y += veloY;
 		jumpLockCounter();
@@ -149,9 +146,6 @@ public class Player extends Sprite {
 	}
 
 	// === Getters ===
-	public boolean isAlive() {
-		return alive;
-	}
 	public String getName() {
 		return name;
 	}

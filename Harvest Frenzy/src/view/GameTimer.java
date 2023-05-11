@@ -52,7 +52,7 @@ public class GameTimer extends AnimationTimer{
 		this.gravity();
 	}
 
-	// renders all fruits and da player
+	// renders all elements
 	public void renderImages() {
 		this.player1.render(this.gc);
 

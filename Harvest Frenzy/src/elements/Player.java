@@ -10,7 +10,7 @@ import view.GameMenu;
 public class Player extends Sprite {
 	// --- PLAYER CONSTANTS ---
 	private final static int PLAYER_HEIGHT = 128;
-	private final static int PLAYER_WIDTH = 128;
+	private final static int PLAYER_WIDTH = 96;
 	private final static double MOVE_SPEED = 8;
 	private final static double JUMP_HEIGHT = 28;
 	private final static Image PLAYER_IMAGE = new Image ("/model/resources/player_placeholder.png", PLAYER_WIDTH, PLAYER_HEIGHT, false, false);
@@ -104,7 +104,11 @@ public class Player extends Sprite {
 	private void gravity() {
 		if((getY() + PLAYER_HEIGHT) < GameMenu.WINDOW_HEIGHT) {	// Player is not touching the ground
 			if(playerGravity) {
-				setVeloY(GRAVITY_CONSTANT);
+				if (jumpCount > 1) {
+					setVeloY(GRAVITY_CONSTANT*1.8);
+				} else {
+					setVeloY(GRAVITY_CONSTANT);
+				}
 			}
 		} else {
 			setJumpLock(false);

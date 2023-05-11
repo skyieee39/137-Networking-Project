@@ -27,12 +27,13 @@ public class GameTimer extends AnimationTimer{
 		this.gc = gc;
 		this.scene = scene;
 		this.gs = gs;
-		this.startSpawn = System.nanoTime();
+		startSpawn = System.nanoTime();
 
-		this.player1 = new Player(0, GameMenu.WINDOW_HEIGHT - 64);
-		this.fruits = new ArrayList<Fruit>();
+		player1 = new Player(0, GameMenu.WINDOW_HEIGHT - 64);
+		fruits = new ArrayList<Fruit>();
 
-		this.spawnFruits(7);
+		keyPressEvent();
+		spawnFruits(7);
 	}
 
 	// game loop
@@ -51,61 +52,6 @@ public class GameTimer extends AnimationTimer{
 		this.gravity();
 	}
 
-	// moves player based on key input
-	public void movePlayer(KeyCode keyCode) {
-		switch(keyCode) {
-		case SPACE:
-			if (!getJumpLock()) {
-				this.player1.setVeloY(-20);
-			}
-			setJumpLock(true);
-			gravity = false;
-			break;
-		case DOWN:
-			break;
-		case RIGHT:
-			this.player1.setVeloX(5);
-			break;
-		case LEFT:
-			this.player1.setVeloX(-5);
-			break;
-		default:
-			break;
-			}
-
-		System.out.println(keyCode + " key pressed.");
-		System.out.println("X: " + this.player1.getX());
-		System.out.println("Y: " + this.player1.getY());
-	}
-
-	public void haltPlayer(KeyCode keyCode) {
-		switch(keyCode) {
-		case SPACE:
-			setJumpLock(true);
-			if (gravity) {
-				this.player1.setVeloY(0);
-			}
-			gravity = true;
-			break;
-		case DOWN:
-			break;
-		case RIGHT:
-			this.player1.setVeloX(0);
-			break;
-		case LEFT:
-			this.player1.setVeloX(0);
-			break;
-		case ESCAPE:
-			System.exit(0);
-		default:
-			break;
-			}
-
-		System.out.println(keyCode + " key released.");
-		System.out.println("X: " + this.player1.getX());
-		System.out.println("Y: " + this.player1.getY());
-	}
-
 	// renders all fruits and da player
 	public void renderImages() {
 		this.player1.render(this.gc);
@@ -117,26 +63,6 @@ public class GameTimer extends AnimationTimer{
 
 	// adds value to y axis ng mga elements to simulate gravity
 	private void gravity() {
-		if((this.player1.getY() + 64) < GameMenu.WINDOW_HEIGHT) {
-			if(gravity) {
-				this.player1.setVeloY(5);
-			}
-		} else {
-			// player is touching the ground
-			setJumpLock(false);
-			this.player1.setVeloY(0);
-		}
-
-		// the next two if-statements teleports the basket to the other side
-		// if sumobra na sa window
-		if((this.player1.getX() + 64) > GameMenu.WINDOW_WIDTH) {
-			this.player1.setX(-GameMenu.WINDOW_WIDTH);
-		}
-
-		if((this.player1.getX()) < 0) {
-			this.player1.setX(GameMenu.WINDOW_WIDTH);
-		}
-
 		// for each fruit, dagdag sa y axis
 		for(int i = 0; i < this.fruits.size(); i++) {
 			Fruit f = this.fruits.get(i);
@@ -164,12 +90,23 @@ public class GameTimer extends AnimationTimer{
 		}
 	}
 
-	// keyPress Lock
-	public boolean getJumpLock(){
-		return gs.keyJumpLock;
-	}
+	private void keyPressEvent() {
+		this.scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent e) {
+				// Will ignore any space key input while the player is currently in the jumping state
+				if (!(e.getCode().equals(KeyCode.SPACE) && player1.getIsJumping())) {
+					player1.move(e.getCode());
+				}
 
-	public void setJumpLock(boolean lock) {
-		gs.keyJumpLock = lock;
+			}
+		});
+
+		this.scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent e) {
+				player1.halt(e.getCode());
+			}
+		});
 	}
 }

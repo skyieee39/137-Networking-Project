@@ -22,7 +22,7 @@ public class Sprite {
 	protected void loadImage(Image img){
 		try{
 			this.img = img;
-	        this.setSize();
+	        setSize();
 	        } catch(Exception e){
 	        	System.out.print(e);
 	        	System.exit(1);

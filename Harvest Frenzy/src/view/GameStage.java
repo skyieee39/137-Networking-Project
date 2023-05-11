@@ -22,9 +22,6 @@ public class GameStage {
 	private GraphicsContext gc;
 	private GameTimer gametimer;
 
-	// List of keys to lock
-	public boolean keyJumpLock = false;
-
 	//the class constructor
 	public GameStage() {
 		this.root = new Group();
@@ -47,7 +44,6 @@ public class GameStage {
 
 		// for full screen
 		setFullScreen();
-		keyPressEvent();
 		this.stage.show();
 	}
 
@@ -67,21 +63,5 @@ public class GameStage {
 		} else {
 			stage.setFullScreen(false);
 		}
-	}
-
-	private void keyPressEvent() {
-		this.scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent e) {
-				gametimer.movePlayer(e.getCode());
-			}
-		});
-
-		this.scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent e) {
-				gametimer.haltPlayer(e.getCode());
-			}
-		});
 	}
 }

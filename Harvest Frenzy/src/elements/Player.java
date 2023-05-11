@@ -1,26 +1,39 @@
 package elements;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import view.GameMenu;
 
 public class Player extends Sprite {
-	public final static Image PLAYER_IMAGE = new Image ("/model/resources/player_placeholder.png", 64, 64, false, false);
-	public final static int MAX_JUMP_COUNT = 2;
+	// --- PLAYER CONSTANTS ---
+	private final static int PLAYER_HEIGHT = 128;
+	private final static int PLAYER_WIDTH = 128;
+	private final static double MOVE_SPEED = 8;
+	private final static double JUMP_HEIGHT = 28;
+	private final static Image PLAYER_IMAGE = new Image ("/model/resources/player_placeholder.png", PLAYER_WIDTH, PLAYER_HEIGHT, false, false);
+	// --- PLAYER ATTRIBUTES ---
 	private String name;
 	private int score;
 	private double veloX = 0;
 	private double veloY = 0;
-
+	// --- ENVIRONMENT CONSTANTS ---
+	private final static int MAX_JUMP_COUNT = 2;
+	private final static double GRAVITY_CONSTANT = 10;
+	// --- ENVIRONMENT ATTRIBUTES ---
 	private boolean playerGravity = true;
 	private boolean isJumping = false;
 	private boolean keyJumpLock = false;
 	private int jumpLockCounter = 0;
 	private int jumpCount = 0;
+	private List<String> activeKeys;
 
 	// === Constructor ===
 	public Player(double xPos, double yPos) {
 		super(xPos, yPos);
+		activeKeys = new ArrayList<>();
 		loadImage(PLAYER_IMAGE);
 		name = "Player";
 		score = 0;
@@ -47,10 +60,12 @@ public class Player extends Sprite {
 				}
 				break;
 			case RIGHT:
-				setVeloX(5);
+				addActiveDirection("R");
+				smoothDirection();
 				break;
 			case LEFT:
-				setVeloX(-5);
+				addActiveDirection("L");
+				smoothDirection();
 				break;
 			default:
 				break;
@@ -67,10 +82,12 @@ public class Player extends Sprite {
 				playerGravity = true;
 				break;
 			case RIGHT:
-				setVeloX(0);
+				remActiveDirection("R");
+				smoothDirection();
 				break;
 			case LEFT:
-				setVeloX(0);
+				remActiveDirection("L");
+				smoothDirection();
 				break;
 			case ESCAPE:
 				System.exit(0);
@@ -85,28 +102,30 @@ public class Player extends Sprite {
 
 	// === Physics ===
 	private void gravity() {
-		if((getY() + 64) < GameMenu.WINDOW_HEIGHT) {
+		if((getY() + PLAYER_HEIGHT) < GameMenu.WINDOW_HEIGHT) {	// Player is not touching the ground
 			if(playerGravity) {
-				setVeloY(5);
+				setVeloY(GRAVITY_CONSTANT);
 			}
 		} else {
-			// player is touching the ground
 			setJumpLock(false);
 			isJumping = false;
 			setVeloY(0);
+			makeGrounded();
 			// Will only reset jump count to 0 once the player touches the ground
-			if (jumpCount >= MAX_JUMP_COUNT) {
-				jumpCount = 0;
-			}
+			jumpCount = 0;
 		}
 
 		// Teleport the player to the other side once it reaches the end of the window
-		if((getX() + 64) > GameMenu.WINDOW_WIDTH) {
+		if((getX() + PLAYER_WIDTH) > GameMenu.WINDOW_WIDTH) {
 			setX(-GameMenu.WINDOW_WIDTH);
 		}
 		if((getX()) < 0) {
 			setX(GameMenu.WINDOW_WIDTH);
 		}
+	}
+
+	private void makeGrounded() {
+		y = GameMenu.WINDOW_HEIGHT - PLAYER_HEIGHT;
 	}
 
 	// === Jump Lock functions ===
@@ -129,7 +148,11 @@ public class Player extends Sprite {
 				jumpLockCounter++;
 				// This allows the player to jump up to 160 units up per jump
 				if (jumpLockCounter < 8) {
-					setVeloY(-20);		// Sets jump distance to 20 units up per frame until 8 frames
+					if (jumpCount == 0) {
+						setVeloY(-JUMP_HEIGHT);		// Sets jump distance to 25 units up per frame until 8 frames
+					} else {
+						setVeloY(-(JUMP_HEIGHT + JUMP_HEIGHT*0.4));
+					}
 					isJumping = true;	// Will let the key listener know to not register other space key inputs
 				} else {				// The maximum height is now reached
 					setVeloY(0);
@@ -145,9 +168,38 @@ public class Player extends Sprite {
 		}
 	}
 
+	// === DIRECTION LOCK FUNCTIONS ===
+	private void addActiveDirection(String Key) {
+		if (!activeKeys.contains(Key)) {
+			activeKeys.add(Key);
+		}
+
+	}
+	private void remActiveDirection(String Key) {
+		if (activeKeys.contains(Key)) {
+			activeKeys.remove(Key);
+		}
+
+	}
+	private void smoothDirection() {
+		if (activeKeys.size() != 0) {
+			if (activeKeys.get(0) == "R") {
+				setVeloX(MOVE_SPEED);
+			} else if (activeKeys.get(0) == "L") {
+				setVeloX(-MOVE_SPEED);
+			}
+		} else {
+			setVeloX(0);
+		}
+
+	}
+
 	// === Getters ===
 	public String getName() {
 		return name;
+	}
+	public int getScore() {
+		return score;
 	}
 
 	// === Setters ===
@@ -156,5 +208,8 @@ public class Player extends Sprite {
 	}
 	public void setVeloY(double vy) {
 		veloY = vy;
+	}
+	public void setScore(int points) {
+		score += points;
 	}
 }

@@ -61,9 +61,8 @@ public class GameTimer extends AnimationTimer{
 		}
 	}
 
-	// adds value to y axis ng mga elements to simulate gravity
+	// Gravity simulation for fruits
 	private void gravity() {
-		// for each fruit, dagdag sa y axis
 		for(int i = 0; i < this.fruits.size(); i++) {
 			Fruit f = this.fruits.get(i);
 
@@ -98,7 +97,6 @@ public class GameTimer extends AnimationTimer{
 				if (!(e.getCode().equals(KeyCode.SPACE) && player1.getIsJumping())) {
 					player1.move(e.getCode());
 				}
-
 			}
 		});
 

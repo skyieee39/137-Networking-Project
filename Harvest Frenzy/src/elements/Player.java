@@ -30,7 +30,6 @@ public class Player extends Sprite {
 
 	// THIS FUNCTION IS CALLED EVERY TIME THE HANDLE IS CALLED
 	public void frame() {
-		System.out.println("FRAME");
 		x += veloX;
 		y += veloY;
 		jumpLockCounter();

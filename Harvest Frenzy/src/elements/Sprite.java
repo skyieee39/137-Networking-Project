@@ -23,7 +23,10 @@ public class Sprite {
 		try{
 			this.img = img;
 	        this.setSize();
-	        } catch(Exception e){}
+	        } catch(Exception e){
+	        	System.out.print(e);
+	        	System.exit(1);
+	        }
 		}
 
 	// method to set the object's width and height properties

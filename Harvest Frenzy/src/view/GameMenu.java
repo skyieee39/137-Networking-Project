@@ -37,22 +37,22 @@ public class GameMenu {
 	private CloudTimer cloudtimer;
 	List<HarFreButton> menuBtns;
 
-	//the class constructor
+	// === CONSTRUCTOR ===
 	public GameMenu() {
 		menuBtns = new ArrayList<>();
 		pane = new AnchorPane();
 		scene = new Scene(pane, WINDOW_WIDTH, WINDOW_HEIGHT);
 		canvas = new Canvas(WINDOW_WIDTH,WINDOW_HEIGHT);
 		gc = canvas.getGraphicsContext2D();
-		this.cloudtimer = new CloudTimer(this.gc);
+		cloudtimer = new CloudTimer(gc);
 
 	}
 
-	//method to add the stage elements
+	// === STAGE SETUP ===
 	public void setStage(Stage stage) {
 		this.stage = stage;
 		this.stage.setTitle("Harvest Frenzy");
-		this.stage.setScene(this.scene);
+		this.stage.setScene(scene);
 
 		// For Full Screen
 		this.stage.initStyle(StageStyle.UNDECORATED);
@@ -65,7 +65,8 @@ public class GameMenu {
 		this.stage.show();
 	}
 
-	// Menu Buttons creation
+	// === BUTTONS ===
+	// Creation
 	private void createMenuButtons() {
 		initStartButton();
 		initInstructionButton();
@@ -115,14 +116,14 @@ public class GameMenu {
 
 	//Button Event Handler
 	private void addEventHandler(Button btn) {
-		if (btn.equals(this.menuBtns.get(0))){
+		if (btn.equals(menuBtns.get(0))){
 			btn.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				public void handle(MouseEvent arg0) {
 					GameStage gamestage = new GameStage();
 					gamestage.setStage(stage);
 				}
 			});
-		} else if (btn.equals(this.menuBtns.get(4))){
+		} else if (btn.equals(menuBtns.get(4))){
 			btn.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				public void handle(MouseEvent arg0) {
 					System.exit(0);
@@ -131,7 +132,7 @@ public class GameMenu {
 		}
 	}
 
-	// Set Background
+	// === SET BACKGROUND ===
 	private void createBackground() {
 		pane.setStyle(
 				"-fx-background-image: url(" +
@@ -141,7 +142,7 @@ public class GameMenu {
 	       );
 	}
 
-	// Set Fullscreen
+	// === SET FULL SCREEN ===
 	private void setFullScreen() {
 		if (fullscreen) {
 			stage.setFullScreen(true);

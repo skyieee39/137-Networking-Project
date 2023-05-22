@@ -11,12 +11,12 @@ public class Sprite {
 	protected double width;
 	protected double height;
 
-	// constructor
+	// === CONSTRUCTOR ===
 	public Sprite(double xPos, double yPos){
 		this.x = xPos;
 		this.y = yPos;
 		this.visible = true;
-		}
+	}
 
 	// method to load image
 	protected void loadImage(Image img){
@@ -27,8 +27,7 @@ public class Sprite {
 	        	System.out.print(e);
 	        	System.exit(1);
 	        }
-		}
-
+	}
 	// method to set the object's width and height properties
 	private void setSize(){
 		this.width = this.img.getWidth();
@@ -46,7 +45,7 @@ public class Sprite {
 		Rectangle2D rectangle2 = rect2.getBounds();
 
 		return rectangle1.intersects(rectangle2);
-		}
+	}
 
 	// method that will return the bounds of an image
 	private Rectangle2D getBounds(){

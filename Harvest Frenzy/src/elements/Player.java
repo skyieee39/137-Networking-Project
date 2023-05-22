@@ -1,29 +1,59 @@
 package elements;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.util.Duration;
 import view.GameMenu;
 
 public class Player extends Sprite {
-	public final static Image PLAYER_IMAGE = new Image ("/model/resources/player_placeholder.png", 64, 64, false, false);
-	public final static int MAX_JUMP_COUNT = 2;
+	/* NOTE:
+	 * 1.Game play may vary depending on window size
+	 * 2. Wider screens have greater real estate and traversing from the end to the end can
+	 *     change experience
+	 * 3. Taller screens can affect the positioning of elements when online
+	 * */
+	// --- PLAYER CONSTANTS ---
+	private final static int PLAYER_HEIGHT = 246;
+	private final static int PLAYER_WIDTH = 216;
+	private final static double MOVE_SPEED = GameMenu.WINDOW_WIDTH/213;
+	private final static double JUMP_HEIGHT = 28 + (PLAYER_HEIGHT/2)/8;
+	private final static int CYCLE_COUNT = 5;
+	// --- PLAYER ATTRIBUTES ---
 	private String name;
 	private int score;
 	private double veloX = 0;
 	private double veloY = 0;
-
+	SpriteSheet sheet;
+	// --- ENVIRONMENT CONSTANTS ---
+	private final static int MAX_JUMP_COUNT = 2;
+	private final static double GRAVITY_CONSTANT = 10;
+	private final static int HANG_TIME = 4;
+	// --- ENVIRONMENT ATTRIBUTES ---
 	private boolean playerGravity = true;
 	private boolean isJumping = false;
 	private boolean keyJumpLock = false;
 	private int jumpLockCounter = 0;
 	private int jumpCount = 0;
+	private int hangCount = 0;
+	private List<String> activeKeys;
 
 	// === Constructor ===
 	public Player(double xPos, double yPos) {
 		super(xPos, yPos);
-		loadImage(PLAYER_IMAGE);
+		activeKeys = new ArrayList<>();
+		sheet = new SpriteSheet(0, CYCLE_COUNT, 4, PLAYER_WIDTH, PLAYER_HEIGHT, this);
 		name = "Player";
 		score = 0;
+	}
+
+	@Override
+	public void render(GraphicsContext gc){
+		gc.drawImage(sheet.getImg(), this.x, this.y);
 	}
 
 	// THIS FUNCTION IS CALLED EVERY TIME THE HANDLE IS CALLED
@@ -32,6 +62,7 @@ public class Player extends Sprite {
 		y += veloY;
 		jumpLockCounter();
 		gravity();
+		sheet.play();
 	}
 
 	// === Player movement ===
@@ -47,14 +78,16 @@ public class Player extends Sprite {
 				}
 				break;
 			case RIGHT:
-				setVeloX(5);
+				addActiveDirection("R");
+				smoothDirection();
 				break;
 			case LEFT:
-				setVeloX(-5);
+				addActiveDirection("L");
+				smoothDirection();
 				break;
 			default:
 				break;
-				}
+			}
 
 			System.out.println(keyCode + " key pressed.");
 			System.out.println("X: " + getX());
@@ -67,10 +100,12 @@ public class Player extends Sprite {
 				playerGravity = true;
 				break;
 			case RIGHT:
-				setVeloX(0);
+				remActiveDirection("R");
+				smoothDirection();
 				break;
 			case LEFT:
-				setVeloX(0);
+				remActiveDirection("L");
+				smoothDirection();
 				break;
 			case ESCAPE:
 				System.exit(0);
@@ -85,28 +120,34 @@ public class Player extends Sprite {
 
 	// === Physics ===
 	private void gravity() {
-		if((getY() + 64) < GameMenu.WINDOW_HEIGHT) {
+		if((getY() + PLAYER_HEIGHT) < GameMenu.WINDOW_HEIGHT) {	// Player is not touching the ground
 			if(playerGravity) {
-				setVeloY(5);
+				if (jumpCount > 1) {
+					setVeloY(GRAVITY_CONSTANT*1.8);
+				} else {
+					setVeloY(GRAVITY_CONSTANT);
+				}
 			}
 		} else {
-			// player is touching the ground
 			setJumpLock(false);
 			isJumping = false;
 			setVeloY(0);
+			makeGrounded();
 			// Will only reset jump count to 0 once the player touches the ground
-			if (jumpCount >= MAX_JUMP_COUNT) {
-				jumpCount = 0;
-			}
+			jumpCount = 0;
 		}
 
 		// Teleport the player to the other side once it reaches the end of the window
-		if((getX() + 64) > GameMenu.WINDOW_WIDTH) {
+		if((getX() + PLAYER_WIDTH) > GameMenu.WINDOW_WIDTH) {
 			setX(-GameMenu.WINDOW_WIDTH);
 		}
 		if((getX()) < 0) {
 			setX(GameMenu.WINDOW_WIDTH);
 		}
+	}
+
+	private void makeGrounded() {
+		y = GameMenu.WINDOW_HEIGHT - PLAYER_HEIGHT;
 	}
 
 	// === Jump Lock functions ===
@@ -129,25 +170,78 @@ public class Player extends Sprite {
 				jumpLockCounter++;
 				// This allows the player to jump up to 160 units up per jump
 				if (jumpLockCounter < 8) {
-					setVeloY(-20);		// Sets jump distance to 20 units up per frame until 8 frames
+					sheet.setState(3);
+					if (jumpCount == 0) {
+						setVeloY(-JUMP_HEIGHT);		// Sets jump distance to 25 units up per frame until 8 frames
+					} else {
+						setVeloY(-(JUMP_HEIGHT + JUMP_HEIGHT*0.2));
+					}
 					isJumping = true;	// Will let the key listener know to not register other space key inputs
 				} else {				// The maximum height is now reached
 					setVeloY(0);
-					playerGravity = true;	// Gravity will be turned on again
+					hangCount++;
+					if (jumpCount == 0) {
+						if (hangCount >= HANG_TIME) {
+							playerGravity = true;	// Gravity will be turned on again
+						}
+					} else {
+						playerGravity = true;
+					}
 				}
 				if (jumpLockCounter > 12) {	// 12 frames has passed (1 jump animation)
 					jumpCount++;			// Increment the number of jumps performed
 					isJumping = false;		// Tell the key listener that it can now accept another jump key input
 					setJumpLock(false);		// Tell this function to not do anything
 					jumpLockCounter = 0;	// reset the jump action counter
+					hangCount = 0;
 				}
 			}
+		}
+	}
+
+	// === DIRECTION LOCK FUNCTIONS ===
+	private void addActiveDirection(String Key) {
+		if (!activeKeys.contains(Key)) {
+			activeKeys.add(Key);
+		}
+	}
+	private void remActiveDirection(String Key) {
+		if (activeKeys.contains(Key)) {
+			activeKeys.remove(Key);
+		}
+	}
+	private void smoothDirection() {
+		if (activeKeys.size() != 0) {
+			if (activeKeys.get(0) == "R") {
+				setVeloX(MOVE_SPEED);
+				if(jumpCount > 0) {
+					sheet.setState(3);
+				} else {
+					sheet.setState(0);
+				}
+			} else if (activeKeys.get(0) == "L") {
+				setVeloX(-MOVE_SPEED);
+				if(jumpCount > 0) {
+					sheet.setState(3);
+				} else {
+					sheet.setState(1);
+				}
+			}
+		} else {
+			sheet.setState(2);
+			setVeloX(0);
 		}
 	}
 
 	// === Getters ===
 	public String getName() {
 		return name;
+	}
+	public int getScore() {
+		return score;
+	}
+	public int getJumpCount() {
+		return jumpCount;
 	}
 
 	// === Setters ===
@@ -156,5 +250,8 @@ public class Player extends Sprite {
 	}
 	public void setVeloY(double vy) {
 		veloY = vy;
+	}
+	public void setScore(int points) {
+		score += points;
 	}
 }

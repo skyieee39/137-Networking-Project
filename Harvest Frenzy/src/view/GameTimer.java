@@ -46,14 +46,13 @@ public class GameTimer extends AnimationTimer{
 		int durationTime = (int)(currentTime - startTime);
 		player1.frame();
 		// renders fruits and baskets
-		this.renderImages();
-
+		renderImages();
 		// updates gravity
-		this.gravity();
+		gravity();
 	}
 
 	// renders all elements
-	public void renderImages() {
+	private void renderImages() {
 		this.player1.render(this.gc);
 
 		for(Fruit f : this.fruits) {

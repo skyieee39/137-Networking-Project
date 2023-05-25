@@ -19,7 +19,7 @@ public class Sprite {
 	}
 
 	// method to load image
-	protected void loadImage(Image img){
+	public void loadImage(Image img){
 		try{
 			this.img = img;
 	        setSize();
@@ -37,7 +37,7 @@ public class Sprite {
 	// method to set the image to the image view node
 	public void render(GraphicsContext gc){
 		gc.drawImage(this.img, this.x, this.y);
-		}
+	}
 
 	// method that will check for collision of two sprites
 	public boolean collidesWith(Sprite rect2)	{
@@ -66,6 +66,10 @@ public class Sprite {
 	// method to get y position
 	public double getY() {
     	return this.y;
+	}
+
+	public double getWidth() {
+		return width;
 	}
 
 	// method to get visible property

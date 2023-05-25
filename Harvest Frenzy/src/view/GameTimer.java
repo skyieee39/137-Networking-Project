@@ -7,31 +7,36 @@ import java.util.concurrent.TimeUnit;
 import app.SecTimer;
 import elements.Fruit;
 import elements.Player;
+import elements.Sprite;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 public class GameTimer extends AnimationTimer{
+	private final static String BG_LINK = "/view/resources/GameStage_BG1.png";
 	private GraphicsContext gc;
 	private Scene scene;
 	private long startSpawn;
 	private Player player1;
 	private ArrayList<Fruit> fruits;
-	private GameStage gs;
+	private Sprite bg;
+	private Image bgImg;
 	public boolean gravity = true;
 
-	GameTimer(GraphicsContext gc, Scene scene, GameStage gs) {
+	GameTimer(GraphicsContext gc, Scene scene) {
 		this.gc = gc;
 		this.scene = scene;
-		this.gs = gs;
 		startSpawn = System.nanoTime();
 
-		player1 = new Player(0, GameMenu.WINDOW_HEIGHT - 64);
+		player1 = new Player(0, 0);
 		fruits = new ArrayList<Fruit>();
+		bg = new Sprite(0, 0);
 
+		setupBackground();
 		keyPressEvent();
 		spawnFruits(7);
 	}
@@ -53,10 +58,11 @@ public class GameTimer extends AnimationTimer{
 
 	// renders all elements
 	private void renderImages() {
-		this.player1.render(this.gc);
+		bg.render(gc);
+		player1.render(gc);
 
-		for(Fruit f : this.fruits) {
-			f.render(this.gc);
+		for(Fruit f : fruits) {
+			f.render(gc);
 		}
 	}
 
@@ -65,25 +71,29 @@ public class GameTimer extends AnimationTimer{
 		for(int i = 0; i < this.fruits.size(); i++) {
 			Fruit f = this.fruits.get(i);
 
-			if((f.getY() + 64) < GameMenu.WINDOW_HEIGHT) {
-				Random r = new Random();
-
-				int speed = r.nextInt((int) Fruit.MAX_FRUIT_SPEED);
-
-				f.setY(speed);
+			if((f.getY() + f.getWidth()) < GameMenu.WINDOW_HEIGHT) {
+				f.setY(f.getSpeed());
 			}
 		}
+	}
+
+	// sets-up background
+	private void setupBackground() {
+		bgImg = new Image(BG_LINK, GameMenu.WINDOW_WIDTH, GameMenu.WINDOW_HEIGHT, false, false);
+		bg.loadImage(bgImg);
 	}
 
 	// spawns all fruits based on max numbers
 	private void spawnFruits(int max) {
 		Random r = new Random();
+		Random type = new Random();
 
 		for(int i = 0; i < max; i++) {
 			double y = 0;
 			double x = r.nextInt((int) (GameMenu.WINDOW_HEIGHT - 64));
+			int t = type.nextInt(3);
 
-			Fruit f = new Fruit(x, y);
+			Fruit f = new Fruit(x, y, t);
 			this.fruits.add(f);
 		}
 	}

@@ -18,8 +18,8 @@ public class Player extends Sprite {
 	 * 3. Taller screens can affect the positioning of elements when online
 	 * */
 	// --- PLAYER CONSTANTS ---
-	private final static int PLAYER_HEIGHT = 246;
-	private final static int PLAYER_WIDTH = 216;
+	private final static int PLAYER_HEIGHT = 230;
+	private final static int PLAYER_WIDTH = 200;
 	private final static double MOVE_SPEED = GameMenu.WINDOW_WIDTH/213;
 	private final static double JUMP_HEIGHT = 28 + (PLAYER_HEIGHT/2)/8;
 	private final static int CYCLE_COUNT = 5;

@@ -32,15 +32,12 @@ public class Sprite {
 	// method to set the image to the image view node
 	public void render(GraphicsContext gc){
 		gc.drawImage(this.img, this.x, this.y);
-<<<<<<< HEAD
-		}
+	}
 	
 	// method to set the object's width and height properties
 	private void setSize(){
 			this.width = this.img.getWidth();
 			this.height = this.img.getHeight();
-=======
->>>>>>> 9dc27120b7068890a3582071381c25dbecca15ae
 	}
 
 	// method that will check for collision of two sprites

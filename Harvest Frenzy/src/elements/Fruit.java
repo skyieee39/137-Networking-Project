@@ -6,23 +6,19 @@ import javafx.scene.image.Image;
 import view.GameMenu;
 
 public class Fruit extends Sprite {
-<<<<<<< HEAD
 	public static final int MAX_FRUIT_SPEED = 5;
 	public final static Image FRUIT_IMAGE = new Image ("/model/resources/Cart_Basket.png", 64, 64, false, false);
-=======
 	private static final int MIN_SPEED = 2;
 	private double speed;
 	private int type;
->>>>>>> 9dc27120b7068890a3582071381c25dbecca15ae
 	private boolean alive;
 	private Image fruitimg;
+	
 	public Fruit(double x, double y, int type){
 		super(x, y);
 		this.alive = true;
-<<<<<<< HEAD
 		this.loadImage(FRUIT_IMAGE);
 		
-=======
 		this.type = type;
 		fruitConfig();
 	}
@@ -42,7 +38,6 @@ public class Fruit extends Sprite {
 		}
 
 		loadImage(fruitimg);
->>>>>>> 9dc27120b7068890a3582071381c25dbecca15ae
 	}
 
 	// checks if the fruit is alive

@@ -2,7 +2,6 @@ package view;
 
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import app.CloudTimer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -12,7 +11,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class GameStage {
@@ -26,25 +24,26 @@ public class GameStage {
 
 	//the class constructor
 	public GameStage() {
-		root = new Group();
-		scene = new Scene(root, GameMenu.WINDOW_WIDTH,GameMenu.WINDOW_HEIGHT);
-		canvas = new Canvas(GameMenu.WINDOW_WIDTH,GameMenu.WINDOW_HEIGHT);
-		gc = canvas.getGraphicsContext2D();
-		gametimer = new GameTimer(this.gc, this.scene);
+		this.root = new Group();
+		this.scene = new Scene(root, GameMenu.WINDOW_WIDTH,GameMenu.WINDOW_HEIGHT);
+		this.canvas = new Canvas(GameMenu.WINDOW_WIDTH,GameMenu.WINDOW_HEIGHT);
+		this.gc = canvas.getGraphicsContext2D();
+		this.gametimer = new GameTimer(this.gc, this.scene, this);
 	}
 
 	// method to add the stage elements
 	public void setStage(Stage stage) {
 		this.stage = stage;
+
+		this.gametimer.start();
+
 		// set stage elements here
+		this.root.getChildren().add(canvas);
 		this.stage.setTitle("Harvest Frenzy");
 		this.stage.setScene(this.scene);
 
 		// for full screen
 		setFullScreen();
-
-		this.root.getChildren().add(canvas);
-		this.gametimer.start();
 		this.stage.show();
 	}
 

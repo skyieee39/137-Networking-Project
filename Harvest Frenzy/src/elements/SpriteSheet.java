@@ -21,7 +21,7 @@ public class SpriteSheet{
 	List<Image> sheet;
 	// sheetname ordered by index
 	private static final List<String> names = new ArrayList<String>() {{
-		add("MANG_DOMAK");
+		add("ZERO");
 	}};
 
 	public SpriteSheet(int sheetnum, int cycle, int row, int width, int height, Player player) {
@@ -39,9 +39,11 @@ public class SpriteSheet{
 		System.out.println("SETTING UP...");
 		for(int i = 0; i < row; i++) {
 			if (i == 3) {
-				System.out.println("Adding: /model/resources/sprites/player/"+sheetname+"/"+i+0+".png");
-				Image temp = new Image("/model/resources/sprites/player/"+sheetname+"/"+i+0+".png", width, height, false, false);
-				sheet.add(temp);
+				for (int j = 0; j < 2; j++) {
+					System.out.println("Adding: /model/resources/sprites/player/"+sheetname+"/"+i+j+".png");
+					Image temp = new Image("/model/resources/sprites/player/"+sheetname+"/"+i+j+".png", width, height, false, false);
+					sheet.add(temp);
+				}
 			} else {
 				for (int j = 0; j < cycle; j++) {
 					System.out.println("Adding: /model/resources/sprites/player/"+sheetname+"/"+i+j+".png");
@@ -60,16 +62,17 @@ public class SpriteSheet{
 				if (frame < CYCLE_DURATION) {
 					frame++;
 				} else {
-					if(curRow == 3) {
-						cycleCount = 0;
+					if(player.getJumpCount() > 0) {
+						playerImg = sheet.get(curRow*cycle);
+					} else {
+						playerImg = sheet.get(curRow*cycle+cycleCount);
 					}
-					playerImg = sheet.get(curRow*cycle+cycleCount);
 					frame = 0;
-					System.out.println("DISPLAYING CYCLE: "+curRow+cycleCount);
 				}
 			} else {
 				cycleCount = 0;
 			}
+			System.out.println("DISPLAYING CYCLE: "+curRow+cycleCount);
 
 	}
 

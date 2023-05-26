@@ -1,9 +1,9 @@
 package elements;
 
 import java.util.Random;
+import view.GameMenu;
 
 import javafx.scene.image.Image;
-import view.GameMenu;
 
 public class Fruit extends Sprite {
 	public static final int MAX_FRUIT_SPEED = 5;
@@ -39,16 +39,23 @@ public class Fruit extends Sprite {
 		}
 
 		loadImage(fruitimg);
+	}
+
+	
+	public Fruit(double x, double y){
+		super(x, y);
+		this.speed = Fruit.MAX_FRUIT_SPEED;
+		this.loadImage(FRUIT_IMAGE);
 		this.alive = true;
 	}
 
+	private void setY() {
+		this.setY(MAX_FRUIT_SPEED);
+	}
+	
 	// checks if the fruit is alive
 	public boolean isAlive() {
 		return this.alive;
-	}
-
-	public double getSpeed() {
-		return speed;
 	}
 
 	// sets if the fruit is dead or alive

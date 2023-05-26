@@ -19,7 +19,7 @@ public class Sprite {
 	}
 
 	// method to load image
-	public void loadImage(Image img){
+	protected void loadImage(Image img){
 		try{
 			this.img = img;
 	        setSize();
@@ -68,10 +68,6 @@ public class Sprite {
 	// method to get y position
 	public double getY() {
     	return this.y;
-	}
-
-	public double getWidth() {
-		return width;
 	}
 
 	// method to get visible property

@@ -5,14 +5,13 @@ import javafx.scene.image.Image;
 public class Fruit extends Sprite {
 	public static final int MAX_FRUIT_SPEED = 5;
 	public final static Image FRUIT_IMAGE = new Image ("/model/resources/Cart_Basket.png", 64, 64, false, false);
-	private int speed;
 	private boolean alive;
 	
 	public Fruit(double x, double y){
 		super(x, y);
-		this.speed = Fruit.MAX_FRUIT_SPEED;
-		this.loadImage(FRUIT_IMAGE);
 		this.alive = true;
+		this.loadImage(FRUIT_IMAGE);
+		
 	}
 
 	private void setY() {
@@ -26,6 +25,8 @@ public class Fruit extends Sprite {
 
 	// sets if the fruit is dead or alive
 	public void setIsDead(){
+		this.setVisible(false);
+		System.out.println("setting visibilty to false");
 		this.alive = false;
 	}
 }

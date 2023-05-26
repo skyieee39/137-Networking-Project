@@ -28,16 +28,17 @@ public class Sprite {
 	        	System.exit(1);
 	        }
 	}
-	// method to set the object's width and height properties
-	private void setSize(){
-		this.width = this.img.getWidth();
-		this.height = this.img.getHeight();
-		}
 
 	// method to set the image to the image view node
 	public void render(GraphicsContext gc){
 		gc.drawImage(this.img, this.x, this.y);
 		}
+	
+	// method to set the object's width and height properties
+	private void setSize(){
+			this.width = this.img.getWidth();
+			this.height = this.img.getHeight();
+	}
 
 	// method that will check for collision of two sprites
 	public boolean collidesWith(Sprite rect2)	{

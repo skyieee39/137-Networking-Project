@@ -28,10 +28,16 @@ public class Sprite {
 	        	System.exit(1);
 	        }
 	}
+	// method to set the object's width and height properties
+	private void setSize(){
+		this.width = this.img.getWidth();
+		this.height = this.img.getHeight();
+		}
 
 	// method to set the image to the image view node
 	public void render(GraphicsContext gc){
 		gc.drawImage(this.img, this.x, this.y);
+<<<<<<< HEAD
 	}
 	
 	// method to set the object's width and height properties
@@ -40,6 +46,9 @@ public class Sprite {
 			this.height = this.img.getHeight();
 	}
 		
+=======
+		}
+>>>>>>> parent of c3fc03c (changed some code in classes)
 
 	// method that will check for collision of two sprites
 	public boolean collidesWith(Sprite rect2)	{

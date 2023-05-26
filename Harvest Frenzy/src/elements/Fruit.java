@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 public class Fruit extends Sprite {
 	public static final int MAX_FRUIT_SPEED = 5;
 	public final static Image FRUIT_IMAGE = new Image ("/model/resources/Cart_Basket.png", 64, 64, false, false);
+
 	private static final int MIN_SPEED = 2;
 	private double speed;
 	private int type;

@@ -21,8 +21,9 @@ public class Player extends Sprite {
 	public final static Image BULLET_IMAGE = new Image("model/resources/sprites/player/ZERO/00.png",200,200,false,false);
 	private final static int PLAYER_HEIGHT = 230;
 	private final static int PLAYER_WIDTH = 200;
-	private final static double MOVE_SPEED = GameMenu.WINDOW_WIDTH/213;
+	private final static double MOVE_SPEED = GameMenu.WINDOW_WIDTH/180;
 	private final static double JUMP_HEIGHT = 28 + (PLAYER_HEIGHT/2)/8;
+	private final static double GROUND_OFFSET = GameMenu.WINDOW_HEIGHT * .11;
 	private final static int CYCLE_COUNT = 5;
 	// --- PLAYER ATTRIBUTES ---
 	private String name;
@@ -122,7 +123,7 @@ public class Player extends Sprite {
 
 	// === Physics ===
 	private void gravity() {
-		if((getY() + PLAYER_HEIGHT) < GameMenu.WINDOW_HEIGHT) {	// Player is not touching the ground
+		if((getY() + PLAYER_HEIGHT) < (GameMenu.WINDOW_HEIGHT - GROUND_OFFSET)) {	// Player is not touching the ground
 			if(playerGravity) {
 				if (jumpCount > 1) {
 					setVeloY(GRAVITY_CONSTANT*1.8);
@@ -137,6 +138,9 @@ public class Player extends Sprite {
 			makeGrounded();
 			// Will only reset jump count to 0 once the player touches the ground
 			jumpCount = 0;
+			if(activeDirectionIsEmpty() && isJumping == false) {
+				sheet.setState(2);
+			}
 		}
 
 		// Teleport the player to the other side once it reaches the end of the window
@@ -149,7 +153,7 @@ public class Player extends Sprite {
 	}
 
 	private void makeGrounded() {
-		y = GameMenu.WINDOW_HEIGHT - PLAYER_HEIGHT;
+		y = (GameMenu.WINDOW_HEIGHT - GROUND_OFFSET) - PLAYER_HEIGHT;
 	}
 
 	// === Jump Lock functions ===
@@ -212,19 +216,27 @@ public class Player extends Sprite {
 			activeKeys.remove(Key);
 		}
 	}
+	private boolean activeDirectionIsEmpty() {
+		if(activeKeys.size() != 0) {
+			return false;
+		}
+		return true;
+	}
 	private void smoothDirection() {
-		if (activeKeys.size() != 0) {
+		if (!activeDirectionIsEmpty()) {
 			if (activeKeys.get(0) == "R") {
 				setVeloX(MOVE_SPEED);
-				if(jumpCount > 0) {
+				if(getJumpLock()) {
 					sheet.setState(3);
+					setVeloX(MOVE_SPEED*1.8);
 				} else {
 					sheet.setState(0);
 				}
 			} else if (activeKeys.get(0) == "L") {
 				setVeloX(-MOVE_SPEED);
-				if(jumpCount > 0) {
+				if(getJumpLock()) {
 					sheet.setState(3);
+					setVeloX(-MOVE_SPEED*1.8);
 				} else {
 					sheet.setState(1);
 				}

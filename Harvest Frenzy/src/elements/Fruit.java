@@ -16,12 +16,13 @@ public class Fruit extends Sprite {
 	
 	public Fruit(double x, double y, int type){
 		super(x, y);
-		this.alive = true;
+		this.speed = Fruit.MAX_FRUIT_SPEED;
 		this.loadImage(FRUIT_IMAGE);
 		
 		this.type = type;
 		fruitConfig();
 	}
+	
 	private void fruitConfig() {
 		if (type == 0) {
 			fruitimg = new Image ("/model/resources/sprites/fruits/pineapple.png", 64, 64, false, false);
@@ -38,6 +39,7 @@ public class Fruit extends Sprite {
 		}
 
 		loadImage(fruitimg);
+		this.alive = true;
 	}
 
 	// checks if the fruit is alive
@@ -51,8 +53,6 @@ public class Fruit extends Sprite {
 
 	// sets if the fruit is dead or alive
 	public void setIsDead(){
-		this.setVisible(false);
-		System.out.println("setting visibilty to false");
 		this.alive = false;
 	}
 }

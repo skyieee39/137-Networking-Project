@@ -39,6 +39,7 @@ public class Sprite {
 			this.width = this.img.getWidth();
 			this.height = this.img.getHeight();
 	}
+		
 
 	// method that will check for collision of two sprites
 	public boolean collidesWith(Sprite rect2)	{

@@ -18,7 +18,6 @@ public class Player extends Sprite {
 	 * 3. Taller screens can affect the positioning of elements when online
 	 * */
 	// --- PLAYER CONSTANTS ---
-	public final static Image BULLET_IMAGE = new Image("model/resources/sprites/player/ZERO/00.png",200,200,false,false);
 	private final static int PLAYER_HEIGHT = 230;
 	private final static int PLAYER_WIDTH = 200;
 	private final static double MOVE_SPEED = GameMenu.WINDOW_WIDTH/180;
@@ -51,7 +50,6 @@ public class Player extends Sprite {
 		sheet = new SpriteSheet(0, CYCLE_COUNT, 4, PLAYER_WIDTH, PLAYER_HEIGHT, this);
 		name = "Player";
 		score = 0;
-		//this.loadImage(Player.BULLET_IMAGE);
 	}
 
 	@Override

@@ -21,15 +21,15 @@ public class Fruit extends Sprite {
 		if (type == 0) {
 			fruitimg = new Image ("/model/resources/sprites/fruits/pineapple.png", 64, 64, false, false);
 			Random r = new Random();
-			speed = r.nextInt((int) GameMenu.WINDOW_HEIGHT/300 - MIN_SPEED) + MIN_SPEED;
+			speed = r.nextInt((int) GameMenu.WINDOW_HEIGHT/300) + MIN_SPEED;
 		} else if (type == 1) {
 			fruitimg = new Image ("/model/resources/sprites/fruits/banana.png", 64, 64, false, false);
 			Random r = new Random();
-			speed = r.nextInt((int) GameMenu.WINDOW_HEIGHT/200 - MIN_SPEED) + MIN_SPEED;
+			speed = r.nextInt((int) GameMenu.WINDOW_HEIGHT/200) + MIN_SPEED;
 		} else if (type == 2) {
 			fruitimg = new Image ("/model/resources/sprites/fruits/strawberry.png", 64, 64, false, false);
 			Random r = new Random();
-			speed = r.nextInt((int) GameMenu.WINDOW_HEIGHT/150 - MIN_SPEED) + MIN_SPEED;
+			speed = r.nextInt((int) GameMenu.WINDOW_HEIGHT/150) + MIN_SPEED;
 		}
 
 		loadImage(fruitimg);

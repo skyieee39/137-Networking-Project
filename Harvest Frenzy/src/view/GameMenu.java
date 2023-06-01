@@ -19,6 +19,7 @@ import model.HarFreButton;
 import java.util.ArrayList;
 import java.util.List;
 import app.CloudTimer;
+import app.Chat;
 
 public class GameMenu {
 

@@ -3,70 +3,71 @@ package app;
 import java.net.*;
 import java.io.*;
 import java.util.*;
-public class Chat
-{
+
+public class Chat {
     private static final String TERMINATE = "Exit";
     static String name;
     static volatile boolean finished = false;
-    public static void main(String[] args)
-    {
-            try
+    
+    public Chat(){
+    	
+    	try
+        {
+            InetAddress group = InetAddress.getByName("239.0.0.0");
+            int port = Integer.parseInt("1234");
+            Scanner sc = new Scanner(System.in);
+            MulticastSocket socket = new MulticastSocket(port);
+            System.out.print("Enter your name: ");
+            name = sc.nextLine();
+            // Since we are deploying
+            socket.setTimeToLive(0);
+            //this on localhost only (For a subnet set it as 1)
+              
+            socket.joinGroup(group);
+            Thread t = new Thread(new
+            ReadThread(socket,group,port));
+          
+            // Spawn a thread for reading messages
+            t.start(); 
+              
+            // sent to the current group
+            System.out.println("Start typing messages...\n");
+            while(true)
             {
-                InetAddress group = InetAddress.getByName("239.0.0.0");
-                int port = Integer.parseInt("1234");
-                Scanner sc = new Scanner(System.in);
-                System.out.print("Enter your name: ");
-                name = sc.nextLine();
-                MulticastSocket socket = new MulticastSocket(port);
-              
-                // Since we are deploying
-                socket.setTimeToLive(0);
-                //this on localhost only (For a subnet set it as 1)
-                  
-                socket.joinGroup(group);
-                Thread t = new Thread(new
-                ReadThread(socket,group,port));
-              
-                // Spawn a thread for reading messages
-                t.start(); 
-                  
-                // sent to the current group
-                System.out.println("Start typing messages...\n");
-                while(true)
+                String message;
+                message = sc.nextLine();
+                if(message.equalsIgnoreCase(Chat.TERMINATE))
                 {
-                    String message;
-                    message = sc.nextLine();
-                    if(message.equalsIgnoreCase(Chat.TERMINATE))
-                    {
-                        finished = true;
-                        socket.leaveGroup(group);
-                        message = name + " has left the chat.";
-                        byte[] buffer = message.getBytes();
-                        DatagramPacket datagram = new
-                        DatagramPacket(buffer,buffer.length,group,port);
-                        socket.send(datagram);
-                        socket.close();
-                        break;
-                    }
-                    message = name + ": " + message;
+                    finished = true;
+                    socket.leaveGroup(group);
+                    message = name + " has left the chat.";
                     byte[] buffer = message.getBytes();
                     DatagramPacket datagram = new
                     DatagramPacket(buffer,buffer.length,group,port);
                     socket.send(datagram);
+                    socket.close();
+                    break;
                 }
+                message = name + ": " + message;
+                byte[] buffer = message.getBytes();
+                DatagramPacket datagram = new
+                DatagramPacket(buffer,buffer.length,group,port);
+                socket.send(datagram);
             }
-            catch(SocketException se)
-            {
-                System.out.println("Error creating socket");
-                se.printStackTrace();
-            }
-            catch(IOException ie)
-            {
-                System.out.println("Error reading/writing from/to socket");
-                ie.printStackTrace();
-            }
+        }
+        catch(SocketException se)
+        {
+            System.out.println("Error creating socket");
+            se.printStackTrace();
+        }
+        catch(IOException ie)
+        {
+            System.out.println("Error reading/writing from/to socket");
+            ie.printStackTrace();
+        }
     }
 }
+
 class ReadThread implements Runnable
 {
     private MulticastSocket socket;

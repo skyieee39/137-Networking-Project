@@ -19,6 +19,7 @@ import model.HarFreButton;
 import java.util.ArrayList;
 import java.util.List;
 import app.CloudTimer;
+import app.Chat;
 
 public class GameMenu {
 
@@ -45,7 +46,6 @@ public class GameMenu {
 		canvas = new Canvas(WINDOW_WIDTH,WINDOW_HEIGHT);
 		gc = canvas.getGraphicsContext2D();
 		cloudtimer = new CloudTimer(gc);
-
 	}
 
 	// === STAGE SETUP ===

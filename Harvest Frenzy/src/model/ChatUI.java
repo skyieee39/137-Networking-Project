@@ -24,7 +24,6 @@ public class ChatUI {
 	private final double CHAT_WIDTH = GameMenu.WINDOW_WIDTH/8;
 	private final double CHAT_OFF = CHAT_WIDTH/20;
 	public ArrayList<String> chats;
-	public GraphicsContext gc;
 	private VBox chatBox;
 	private TextField inputField;
 	private AnchorPane pane;

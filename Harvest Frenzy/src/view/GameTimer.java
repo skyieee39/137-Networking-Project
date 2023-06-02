@@ -12,6 +12,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import model.ScoreUI;
 
 public class GameTimer extends AnimationTimer{
 	private final static String BG_LINK = "/view/resources/GameStage_BG1.png";
@@ -48,14 +49,24 @@ public class GameTimer extends AnimationTimer{
 		renderImages();
 		// updates gravity
 		gravity();
+		// updates score board
+		gs.score.setScoreText();
 	}
 
 	// renders all elements
 	private void renderImages() {
 		bg.render(gc);
 		player.render(gc);
-		for(Fruit f : fruits) {
-			f.render(gc);
+		if(!fruits.isEmpty()) {
+			for(Fruit f : fruits) {
+				if(f.collideWithPlayer(player)) {
+					fruits.remove(f);
+					break;
+				}
+			}
+			for(Fruit f : fruits) {
+				f.render(gc);
+			}
 		}
 	}
 
@@ -89,7 +100,7 @@ public class GameTimer extends AnimationTimer{
 			int t = type.nextInt(3);
 
 			Fruit f = new Fruit(x, y, t);
-			this.fruits.add(f);
+			fruits.add(f);
 		}
 	}
 

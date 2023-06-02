@@ -15,6 +15,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.ChatUI;
+import model.ScoreUI;
 
 public class GameStage {
 
@@ -25,6 +26,7 @@ public class GameStage {
 	private GraphicsContext gc;
 	private GameTimer gametimer;
 	public ChatUI chat;
+	public ScoreUI score;
 
 	//the class constructor
 	public GameStage() {
@@ -34,6 +36,7 @@ public class GameStage {
 		gc = canvas.getGraphicsContext2D();
 		gametimer = new GameTimer(this.gc, this.scene, this);
 		chat = new ChatUI();
+		score = new ScoreUI(gametimer.getPlayer());
 	}
 
 	// method to add the stage elements
@@ -45,9 +48,8 @@ public class GameStage {
 
 		// for full screen
 		setFullScreen();
-		this.root.getChildren().addAll(canvas, chat.getPane());
+		this.root.getChildren().addAll(canvas, chat.getPane(), score.getPane());
 		this.gametimer.start();
-//		keyPressEvent();
 		this.stage.show();
 	}
 
@@ -68,32 +70,4 @@ public class GameStage {
 			stage.setFullScreen(false);
 		}
 	}
-//
-//	public void keyPressEvent() {
-//		this.scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-//			@Override
-//			public void handle(KeyEvent e) {
-//				if (e.getCode().equals(KeyCode.ENTER) && !chat.getIsTyping()) {
-//					chat.setIsTyping(true);
-//					gametimer.setIsTyping(true);
-//				} else if (e.getCode().equals(KeyCode.ENTER) && chat.getIsTyping()) {
-//					chat.setIsTyping(false);
-//					gametimer.setIsTyping(false);
-//				}
-//				// Will ignore any space key input while the player is currently in the jumping state
-//				if(!gametimer.getIsTyping()) {
-//					if (!(e.getCode().equals(KeyCode.SPACE) && gametimer.getPlayer().getIsJumping())) {
-//						gametimer.getPlayer().move(e.getCode());
-//					}
-//				}
-//			}
-//		});
-//
-//		this.scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-//			@Override
-//			public void handle(KeyEvent e) {
-//				gametimer.getPlayer().halt(e.getCode());
-//			}
-//		});
-//	}
 }

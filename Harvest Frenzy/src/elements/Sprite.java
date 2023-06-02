@@ -32,11 +32,13 @@ public class Sprite {
 	private void setSize(){
 		this.width = this.img.getWidth();
 		this.height = this.img.getHeight();
-		}
+	}
 
 	// method to set the image to the image view node
 	public void render(GraphicsContext gc){
-		gc.drawImage(this.img, this.x, this.y);
+		if(visible) {
+			gc.drawImage(this.img, this.x, this.y);
+		}
 	}
 
 	// method that will check for collision of two sprites
@@ -72,16 +74,15 @@ public class Sprite {
 		return width;
 	}
 
+	public double getHeight() {
+		return height;
+	}
+
 	// method to get visible property
 	public boolean getVisible(){
 		return visible;
 	}
 
-	// method to check if visible or not
-	public boolean isVisible(){
-		if(visible) return true;
-		return false;
-	}
 
 	// setters
 	// sets x position

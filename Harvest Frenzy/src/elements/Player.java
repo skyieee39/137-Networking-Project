@@ -46,6 +46,8 @@ public class Player extends Sprite {
 	// === Constructor ===
 	public Player(double xPos, double yPos) {
 		super(xPos, yPos);
+		setHeight(PLAYER_HEIGHT);
+		setWidth(PLAYER_WIDTH);
 		activeKeys = new ArrayList<>();
 		sheet = new SpriteSheet(0, CYCLE_COUNT, 4, PLAYER_WIDTH, PLAYER_HEIGHT, this);
 		name = "Player";
@@ -64,6 +66,7 @@ public class Player extends Sprite {
 		jumpLockCounter();
 		gravity();
 		sheet.play();
+		System.out.println(getScore());
 	}
 
 	// === Player movement ===
@@ -244,6 +247,9 @@ public class Player extends Sprite {
 			setVeloX(0);
 		}
 	}
+
+	// Fruit Collision
+
 
 	// === Getters ===
 	public String getName() {

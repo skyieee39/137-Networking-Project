@@ -46,7 +46,6 @@ public class GameMenu {
 		canvas = new Canvas(WINDOW_WIDTH,WINDOW_HEIGHT);
 		gc = canvas.getGraphicsContext2D();
 		cloudtimer = new CloudTimer(gc);
-
 	}
 
 	// === STAGE SETUP ===

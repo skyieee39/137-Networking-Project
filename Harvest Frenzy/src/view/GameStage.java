@@ -14,6 +14,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.ChatUI;
 
 public class GameStage {
 
@@ -23,6 +24,7 @@ public class GameStage {
 	private Canvas canvas;
 	private GraphicsContext gc;
 	private GameTimer gametimer;
+	private ChatUI chat;
 
 	//the class constructor
 	public GameStage() {
@@ -31,6 +33,7 @@ public class GameStage {
 		canvas = new Canvas(GameMenu.WINDOW_WIDTH,GameMenu.WINDOW_HEIGHT);
 		gc = canvas.getGraphicsContext2D();
 		gametimer = new GameTimer(this.gc, this.scene);
+		chat = new ChatUI();
 	}
 
 	// method to add the stage elements
@@ -43,7 +46,7 @@ public class GameStage {
 		// for full screen
 		setFullScreen();
 
-		this.root.getChildren().add(canvas);
+		this.root.getChildren().addAll(canvas, chat.getPane());
 		this.gametimer.start();
 		this.stage.show();
 	}

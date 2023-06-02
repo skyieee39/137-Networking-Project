@@ -24,7 +24,7 @@ public class GameStage {
 	private Canvas canvas;
 	private GraphicsContext gc;
 	private GameTimer gametimer;
-	private ChatUI chat;
+	public ChatUI chat;
 
 	//the class constructor
 	public GameStage() {
@@ -32,7 +32,7 @@ public class GameStage {
 		scene = new Scene(root, GameMenu.WINDOW_WIDTH,GameMenu.WINDOW_HEIGHT);
 		canvas = new Canvas(GameMenu.WINDOW_WIDTH,GameMenu.WINDOW_HEIGHT);
 		gc = canvas.getGraphicsContext2D();
-		gametimer = new GameTimer(this.gc, this.scene);
+		gametimer = new GameTimer(this.gc, this.scene, this);
 		chat = new ChatUI();
 	}
 
@@ -45,9 +45,9 @@ public class GameStage {
 
 		// for full screen
 		setFullScreen();
-
 		this.root.getChildren().addAll(canvas, chat.getPane());
 		this.gametimer.start();
+//		keyPressEvent();
 		this.stage.show();
 	}
 
@@ -68,4 +68,32 @@ public class GameStage {
 			stage.setFullScreen(false);
 		}
 	}
+//
+//	public void keyPressEvent() {
+//		this.scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+//			@Override
+//			public void handle(KeyEvent e) {
+//				if (e.getCode().equals(KeyCode.ENTER) && !chat.getIsTyping()) {
+//					chat.setIsTyping(true);
+//					gametimer.setIsTyping(true);
+//				} else if (e.getCode().equals(KeyCode.ENTER) && chat.getIsTyping()) {
+//					chat.setIsTyping(false);
+//					gametimer.setIsTyping(false);
+//				}
+//				// Will ignore any space key input while the player is currently in the jumping state
+//				if(!gametimer.getIsTyping()) {
+//					if (!(e.getCode().equals(KeyCode.SPACE) && gametimer.getPlayer().getIsJumping())) {
+//						gametimer.getPlayer().move(e.getCode());
+//					}
+//				}
+//			}
+//		});
+//
+//		this.scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+//			@Override
+//			public void handle(KeyEvent e) {
+//				gametimer.getPlayer().halt(e.getCode());
+//			}
+//		});
+//	}
 }

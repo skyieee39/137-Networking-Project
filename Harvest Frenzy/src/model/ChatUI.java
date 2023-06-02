@@ -20,8 +20,9 @@ import view.GameMenu;
 public class ChatUI {
 
 	private final String FONT_STYLE = "src/model/resources/fonts/Silkscreen/slkscrb.ttf";
-	private final double CHAT_LENGTH = GameMenu.WINDOW_HEIGHT/5;
-	private final double CHAT_WIDTH = GameMenu.WINDOW_WIDTH/4;
+	private final String INPUT_STYLE = "-fx-text-fill:white; -fx-background-color: #D6B12A;";
+	private final double CHAT_WIDTH = GameMenu.WINDOW_WIDTH/8;
+	private final double CHAT_OFF = CHAT_WIDTH/20;
 	public ArrayList<String> chats;
 	public GraphicsContext gc;
 	private VBox chatBox;
@@ -40,9 +41,17 @@ public class ChatUI {
 	}
 
 	private void initChats() {
+		chatBox.setLayoutX(CHAT_OFF);
+		chatBox.setLayoutY(CHAT_OFF);
 		inputField.setEditable(false);
 		inputField.setDisable(true);
+		inputField.setStyle(INPUT_STYLE);
 		inputField.setMaxSize(CHAT_WIDTH, 30);
+		try {
+			inputField.setFont(Font.loadFont(new FileInputStream(FONT_STYLE), 20));
+		} catch (FileNotFoundException e){
+			inputField.setFont(Font.font("Arial", 20));
+		}
 	}
 	// Sets the font style of the chat
 	private void setFont(Text t){

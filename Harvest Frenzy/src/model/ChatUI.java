@@ -2,20 +2,15 @@ package model;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
-
-import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import view.GameMenu;
+import app.Chat;
 
 public class ChatUI {
 
@@ -28,6 +23,7 @@ public class ChatUI {
 	private TextField inputField;
 	private AnchorPane pane;
 	private boolean isTyping;
+	private Chat chat = new Chat();
 
 	public ChatUI() {
 		isTyping = false;
@@ -80,6 +76,7 @@ public class ChatUI {
 	public boolean getIsTyping() {
 		return isTyping;
 	}
+	
 	public void setIsTyping(boolean set) {
 		isTyping = set;
 		if (set == true) {
@@ -91,18 +88,35 @@ public class ChatUI {
 			if(!checkChatSize()) {
 				chats.remove(0);
 			}
-			chats.add(inputField.getText());
+			String textToAdd = inputField.getText().trim();
+			
+			try {
+				chat.sendMessage(textToAdd);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			int currentSize = chat.getArraySize();
+			
+			String received = chat.getReceivedMessages().get(currentSize - 1);
+			
+			chats.add(received);
+			chats.add(textToAdd);
 			inputField.setText("");
 			createVBox();
 		}
 	}
+	
 	public boolean checkChatSize() {
 		if (chats.size() < 5) {
 			return true;
 		}
 		return false;
 	}
+	
     public AnchorPane getPane() {
     	return pane;
     }
+    
 }

@@ -113,7 +113,7 @@ public class GameTimer extends AnimationTimer{
 				} else if (e.getCode().equals(KeyCode.ENTER) && gs.chat.getIsTyping()) {
 					gs.chat.setIsTyping(false);
 				}
-				// Will ignore any space key input while the player is currently in the jumping state
+				// Will ignore any space key input while the player is currently in the typing state
 				if(!gs.chat.getIsTyping()) {
 					if (!(e.getCode().equals(KeyCode.SPACE) && player.getIsJumping())) {
 						player.move(e.getCode());

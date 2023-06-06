@@ -66,7 +66,7 @@ public class Player extends Sprite {
 		jumpLockCounter();
 		gravity();
 		sheet.play();
-		System.out.println(getScore());
+//		System.out.println(getScore());
 	}
 
 	// === Player movement ===

@@ -65,7 +65,7 @@ public class SpriteSheet{
 					}
 					playerImg = sheet.get(curRow*cycle+cycleCount);
 					frame = 0;
-					System.out.println("DISPLAYING CYCLE: "+curRow+cycleCount);
+//					System.out.println("DISPLAYING CYCLE: "+curRow+cycleCount);
 				}
 			} else {
 				cycleCount = 0;

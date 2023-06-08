@@ -2,17 +2,11 @@ package view;
 
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import app.CloudTimer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.ChatUI;
 import model.ScoreUI;

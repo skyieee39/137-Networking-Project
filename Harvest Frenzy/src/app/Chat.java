@@ -9,6 +9,7 @@ public class Chat {
     static String name;
     static volatile boolean finished = false;
     public ArrayList<String> receivedMessages  = new ArrayList<String>();
+    private List<ChatObserver> observers = new ArrayList<>();
     MulticastSocket socket;
     InetAddress group;
     int port;
@@ -86,8 +87,8 @@ public class Chat {
     }
     
     public void addReceivedMessage(String received) {
-    	System.out.println("MESSAGE ADDED TO ARRAY: " + received);
     	receivedMessages.add(received);
+    	notifyObservers();
     }
     
     public ArrayList<String> getReceivedMessages(){
@@ -96,6 +97,20 @@ public class Chat {
     
     public int getArraySize() {
     	return receivedMessages.size();
+    }
+    
+    public void subscribe(ChatObserver observer) {
+    	observers.add(observer);
+    }
+    
+    public void unsubscribe(ChatObserver observer) {
+    	observers.remove(observer);
+    }
+    
+    private void notifyObservers() {
+        for (ChatObserver observer : observers) {
+            observer.onChatUpdated();
+        }
     }
 }
 
@@ -124,8 +139,12 @@ class ReadThread implements Runnable {
                 socket.receive(datagram);
                 message = new String(buffer,0,datagram.getLength(),"UTF-8");
                 if(message != null && !message.startsWith(Chat.name))
-                    System.out.println("CHAT RECEEEEEEEEEIVED: " + message);
+                    System.out.println("CHAT RECEIVED: " + message);
                 	chat.addReceivedMessage(message);
+                	
+                	for(String s : chat.receivedMessages) {
+                		System.out.println(s);
+                	}
             }
             catch(IOException e)
             {

@@ -1,5 +1,6 @@
 package model;
 
+import app.ChatObserver;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,7 +13,7 @@ import javafx.scene.text.Text;
 import view.GameMenu;
 import app.Chat;
 
-public class ChatUI {
+public class ChatUI implements ChatObserver {
 
 	private final String FONT_STYLE = "src/model/resources/fonts/Silkscreen/slkscrb.ttf";
 	private final String INPUT_STYLE = "-fx-text-fill:white; -fx-background-color: #D6B12A;";
@@ -26,6 +27,7 @@ public class ChatUI {
 	private Chat chat = new Chat();
 
 	public ChatUI() {
+		chat.subscribe(this);
 		isTyping = false;
 		chats = new ArrayList<>();
 		chatBox = new VBox();
@@ -34,6 +36,8 @@ public class ChatUI {
 		initChats();
 		createVBox();
 	}
+	
+
 
 	private void initChats() {
 		chatBox.setLayoutX(CHAT_OFF);
@@ -88,21 +92,12 @@ public class ChatUI {
 			if(!checkChatSize()) {
 				chats.remove(0);
 			}
-			String textToAdd = inputField.getText().trim();
 			
-			try {
-				chat.sendMessage(textToAdd);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			String textToSend = inputField.getText().trim();
 			
-			int currentSize = chat.getArraySize();
-			
-			String received = chat.getReceivedMessages().get(currentSize - 1);
-			
-			chats.add(received);
-			chats.add(textToAdd);
+			sendMessage(textToSend);
+		
+			chats.add(textToSend);
 			inputField.setText("");
 			createVBox();
 		}
@@ -117,6 +112,28 @@ public class ChatUI {
 	
     public AnchorPane getPane() {
     	return pane;
+    }
+    
+	public void onChatUpdated() {
+		String textReceived = messageReceived();
+		chats.add(textReceived);
+	}
+    
+    public String messageReceived() {
+		int currentSize = chat.getArraySize();
+		
+		String received = chat.getReceivedMessages().get(currentSize - 1);
+		
+		return received;
+    }
+    
+    public void sendMessage(String textToAdd) {
+		try {
+			chat.sendMessage(textToAdd);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
 }

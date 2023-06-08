@@ -1,6 +1,7 @@
 package view;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.ArrayList;
 import elements.Fruit;
 import elements.Player;
@@ -12,14 +13,15 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import model.ScoreUI;
 
 public class GameTimer extends AnimationTimer{
+	public static final int MAX_FRUITS_NUM = 5;
 	private final static String BG_LINK = "/view/resources/GameStage_BG1.png";
 	private GraphicsContext gc;
 	private GameStage gs;
 	private Scene scene;
 	private long startSpawn;
+	private int spawnSec = 3;
 	private Player player;
 	private ArrayList<Fruit> fruits;
 	private Sprite bg;
@@ -30,7 +32,7 @@ public class GameTimer extends AnimationTimer{
 		this.gc = gc;
 		this.scene = scene;
 		this.gs = gs;
-		startSpawn = System.nanoTime();
+		this.startSpawn = System.nanoTime();
 
 		player = new Player(0, 0);
 		fruits = new ArrayList<Fruit>();
@@ -44,13 +46,34 @@ public class GameTimer extends AnimationTimer{
 	// game loop
 	public void handle(long currentNanoTime) {
 		this.gc.clearRect(0, 0, GameMenu.WINDOW_WIDTH, GameMenu.WINDOW_HEIGHT);
+		long startSec = TimeUnit.NANOSECONDS.toSeconds(startSpawn);
+		long currentSec = TimeUnit.NANOSECONDS.toSeconds(currentNanoTime);
+		
+		int timeSecStart = (int)(currentSec - startSec);
+		int timeSec = timeSecStart - 3;
+		
 		player.frame();
+		
 		// renders fruits and baskets
 		renderImages();
+		
 		// updates gravity
 		gravity();
+		
 		// updates score board
 		gs.score.setScoreText();
+		
+		if (timeSec == this.spawnSec) {
+			System.out.println("Spawning more fruits!");
+			this.spawnFruits(GameTimer.MAX_FRUITS_NUM);
+			this.spawnSec += 3;
+		}
+		
+		if (timeSec == 60) {
+			System.out.println("Time's up!");
+			this.stop();
+			System.exit(0);
+		}
 	}
 
 	// renders all elements

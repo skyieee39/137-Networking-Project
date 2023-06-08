@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.util.Duration;
 import view.GameMenu;
 
 public class Player extends Sprite {

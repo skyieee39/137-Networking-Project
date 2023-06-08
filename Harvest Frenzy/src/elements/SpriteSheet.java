@@ -1,9 +1,7 @@
 package elements;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
 import javafx.scene.image.Image;
 
 public class SpriteSheet{
@@ -19,8 +17,14 @@ public class SpriteSheet{
 	private int frame = 0;
 	private Player player;
 	List<Image> sheet;
+	
 	// sheetname ordered by index
-	private static final List<String> names = new ArrayList<String>() {{
+	private static final List<String> names = new ArrayList<String>() {/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+	{
 		add("MANG_DOMAK");
 	}};
 

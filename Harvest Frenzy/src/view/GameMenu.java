@@ -1,5 +1,7 @@
 package view;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.AnchorPane;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -16,6 +18,9 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.HarFreButton;
+import app.ChatController;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import app.CloudTimer;
@@ -118,8 +123,8 @@ public class GameMenu {
 		if (btn.equals(menuBtns.get(0))){
 			btn.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				public void handle(MouseEvent arg0) {
-					GameStage gamestage = new GameStage();
-					gamestage.setStage(stage);
+					ChatController chatcontroller = new ChatController();
+					chatcontroller.setStage(stage);
 				}
 			});
 		} else if (btn.equals(menuBtns.get(4))){

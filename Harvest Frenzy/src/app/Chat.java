@@ -18,7 +18,7 @@ public class Chat {
     	System.out.println("CHAT IS WORKING.");
     	
     	try {
-            group = InetAddress.getByName("239.0.0.0");
+            group = InetAddress.getLocalHost();
             port = Integer.parseInt("1234");
             
             File nameFile = new File("src/app/name.txt");
@@ -138,13 +138,15 @@ class ReadThread implements Runnable {
             try {
                 socket.receive(datagram);
                 message = new String(buffer,0,datagram.getLength(),"UTF-8");
-                if(message != null && !message.startsWith(Chat.name))
+                System.out.println(Chat.name);
+                if(message != null && !message.startsWith(Chat.name)) {
                     System.out.println("CHAT RECEIVED: " + message);
                 	chat.addReceivedMessage(message);
                 	
                 	for(String s : chat.receivedMessages) {
                 		System.out.println(s);
                 	}
+                }
             }
             catch(IOException e)
             {

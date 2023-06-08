@@ -26,7 +26,7 @@ public class ChatController {
 			stage.setScene(scene);
 			stage.setResizable(false);
 			stage.show();
-			//Sthis.controller = (LobbySystem) loader.getController();
+//			stage.controller = (LobbySystem) loader.getController();	
 			
 		} catch(Exception e) {
 			e.printStackTrace();

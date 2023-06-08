@@ -59,7 +59,7 @@ public class GameMenu {
 		this.stage.setScene(scene);
 
 		// For Full Screen
-		this.stage.initStyle(StageStyle.UNDECORATED);
+//		this.stage.initStyle(StageStyle.UNDECORATED);
 		setFullScreen();
 
 		cloudtimer.start();
@@ -123,6 +123,7 @@ public class GameMenu {
 		if (btn.equals(menuBtns.get(0))){
 			btn.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				public void handle(MouseEvent arg0) {
+					
 					ChatController chatcontroller = new ChatController();
 					chatcontroller.setStage(stage);
 				}
@@ -134,6 +135,10 @@ public class GameMenu {
 				}
 			});
 		}
+	}
+	
+	private void initiateController() {
+		FXMLLoader loader = new FXMLLoader(GameMenu.class.getResource("/view/ViewMultiplayer.fxml"));
 	}
 
 	// === SET BACKGROUND ===

@@ -16,9 +16,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LobbySystem">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: gold;" xmlns="http://javafx.com/javafx/8.0.261" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LobbySystem">
    <children>
-      <VBox fx:id="vboxMP" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: black;">
+      <VBox fx:id="vboxMP" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: gold;">
          <padding>
             <Insets left="80.0" right="80.0" />
          </padding>
@@ -41,7 +41,7 @@
             </Button>
          </children>
       </VBox>
-      <VBox fx:id="vboxCreateRoom" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" visible="false">
+      <VBox fx:id="vboxCreateRoom" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: gold;" visible="false">
          <children>
             <Label alignment="CENTER" prefHeight="50.0" prefWidth="400.0" text="Create Room" textFill="WHITE">
                <font>
@@ -96,12 +96,12 @@
                                  <children>
                                     <ImageView fx:id="buttonIncreaseMinRoom" fitHeight="15.0" fitWidth="30.0" onMouseClicked="#increaseMinRoom" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../resources/icon-arrow-up.png" />
+                                          <Image url="@resources/icon-arrow-up.png" />
                                        </image>
                                     </ImageView>
                                     <ImageView fx:id="buttonDecreaseMinRoom" fitHeight="15.0" fitWidth="30.0" onMouseClicked="#decreaseMinRoom" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../resources/icon-arrow-down.png" />
+                                          <Image url="@resources/icon-arrow-down.png" />
                                        </image>
                                     </ImageView>
                                  </children>
@@ -121,12 +121,12 @@
                                  <children>
                                     <ImageView fx:id="buttonIncreaseMaxRoom" fitHeight="15.0" fitWidth="30.0" onMouseClicked="#increaseMaxRoom" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../resources/icon-arrow-up.png" />
+                                          <Image url="@resources/icon-arrow-up.png" />
                                        </image>
                                     </ImageView>
                                     <ImageView fx:id="buttonDecreaseMaxRoom" fitHeight="15.0" fitWidth="30.0" onMouseClicked="#decreaseMaxRoom" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../resources/icon-arrow-down.png" />
+                                          <Image url="@resources/icon-arrow-down.png" />
                                        </image>
                                     </ImageView>
                                  </children>
@@ -158,7 +158,7 @@
             </Button>
          </children>
       </VBox>
-      <VBox fx:id="vboxJoinRoom" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" visible="false">
+      <VBox fx:id="vboxJoinRoom" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: gold;" visible="false">
          <children>
             <Label alignment="CENTER" prefHeight="50.0" prefWidth="400.0" text="Join Room" textFill="WHITE">
                <font>
@@ -213,7 +213,7 @@
                         <Label alignment="CENTER" prefHeight="18.0" prefWidth="150.0" text="Connecting to server..." textFill="WHITE" />
                         <ImageView fitHeight="20.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/icon-loading.gif" />
+                              <Image url="@resources/icon-loading.gif" />
                            </image>
                         </ImageView>
                      </children>
@@ -228,21 +228,21 @@
             </Button>
          </children>
       </VBox>
-      <VBox fx:id="vboxServerRoom" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" visible="false">
+      <VBox fx:id="vboxServerRoom" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: gold;" visible="false">
          <children>
             <Label fx:id="labelServerIP" prefHeight="20.0" prefWidth="590.0" text="Private Server IP address: X.X.X.X" textFill="WHITE" />
             <HBox prefHeight="380.0" prefWidth="600.0">
                <children>
                   <VBox alignment="TOP_CENTER" prefHeight="380.0" prefWidth="300.0">
                      <children>
-                        <ListView id="US" fx:id="listViewUsersS" prefHeight="300.0" prefWidth="300.0" style="-fx-background-color: black; -fx-text-fill: white;" />
+                        <ListView id="US" fx:id="listViewUsersS" prefHeight="300.0" prefWidth="300.0" style="-fx-background-color: gold; -fx-text-fill: white;" />
                         <HBox alignment="TOP_CENTER" prefHeight="30.0" prefWidth="300.0" spacing="10.0">
                            <children>
                               <Button fx:id="buttonRoomSettings" mnemonicParsing="false" onAction="#openRoomSettings" prefHeight="30.0" prefWidth="30.0">
                                  <graphic>
                                     <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../resources/icon-settings.png" />
+                                          <Image url="@resources/icon-settings.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -275,7 +275,7 @@
             </HBox>
          </children>
       </VBox>
-      <VBox fx:id="vboxLabelServerControls" alignment="CENTER" layoutX="188.0" layoutY="30.0" prefHeight="20.0" prefWidth="110.0" style="-fx-background-color: black;" visible="false">
+      <VBox fx:id="vboxLabelServerControls" alignment="CENTER" layoutX="188.0" layoutY="30.0" prefHeight="20.0" prefWidth="110.0" style="-fx-background-color: gold;" visible="false">
          <children>
             <HBox alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="110.0">
                <children>
@@ -286,7 +286,7 @@
             </HBox>
          </children>
       </VBox>
-      <VBox fx:id="vboxRoomSettings" alignment="TOP_RIGHT" layoutX="100.0" layoutY="50.0" prefHeight="300.0" prefWidth="400.0" spacing="5.0" style="-fx-background-color: black;" visible="false">
+      <VBox fx:id="vboxRoomSettings" alignment="TOP_RIGHT" layoutX="100.0" layoutY="50.0" prefHeight="300.0" prefWidth="400.0" spacing="5.0" style="-fx-background-color: gold;" visible="false">
          <children>
             <HBox alignment="BOTTOM_RIGHT" prefHeight="30.0" prefWidth="400.0">
                <children>
@@ -300,7 +300,7 @@
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/icon-close-white36.png" />
+                              <Image url="@resources/icon-close-white36.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -317,7 +317,7 @@
             </HBox>
             <HBox prefHeight="200.0" prefWidth="400.0">
                <children>
-                  <ListView id="BU" fx:id="listViewBannedUsers" prefHeight="200.0" prefWidth="400.0" style="-fx-background-color: black; -fx-text-fill: white;" />
+                  <ListView id="BU" fx:id="listViewBannedUsers" prefHeight="200.0" prefWidth="400.0" style="-fx-background-color: gold; -fx-text-fill: white;" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="32.0" prefWidth="400.0" spacing="10.0">
@@ -332,7 +332,7 @@
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>
       </VBox>
-      <VBox fx:id="vboxClientRoom" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="5.0" style="-fx-background-color: black;" visible="false">
+      <VBox fx:id="vboxClientRoom" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="5.0" style="-fx-background-color: gold;" visible="false">
          <children>
             <HBox prefHeight="400.0" prefWidth="600.0">
                <children>
@@ -343,7 +343,7 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <ListView id="UC" fx:id="listViewUsersC" prefHeight="300.0" prefWidth="280.0" style="-fx-background-color: black; -fx-text-fill: white;" />
+                        <ListView id="UC" fx:id="listViewUsersC" prefHeight="300.0" prefWidth="280.0" style="-fx-background-color: gold; -fx-text-fill: white;" />
                         <Button fx:id="buttonReady" mnemonicParsing="false" onAction="#toggleReady" prefHeight="26.0" prefWidth="90.0" style="-fx-background-color: red;" text="Not ready" />
                      </children>
                      <padding>
@@ -371,7 +371,7 @@
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../resources/icon-back.png" />
+                        <Image url="@resources/icon-back.png" />
                      </image>
                   </ImageView>
                </graphic>

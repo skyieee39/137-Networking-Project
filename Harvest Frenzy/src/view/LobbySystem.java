@@ -4,9 +4,8 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-//import java.text.SimpleDateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-//import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -130,7 +129,7 @@ public class LobbySystem {
 		
 		private int connectedUsers;
 		
-		//private SimpleDateFormat tformatter;
+		private SimpleDateFormat tformatter;
 		
 		public LobbySystem() {}
 		
@@ -148,7 +147,7 @@ public class LobbySystem {
 			this.vboxRoomSettings.setVisible(false);
 			this.vboxClientRoom.setVisible(false);
 			
-			//this.tformatter = new SimpleDateFormat("[HH:mm:ss]");
+			this.tformatter = new SimpleDateFormat("[HH:mm:ss]");
 			this.showConnectingBox(false);
 			
 			this.buttonCNR.setDisable(true);

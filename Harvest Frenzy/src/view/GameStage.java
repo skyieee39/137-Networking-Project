@@ -8,7 +8,6 @@ import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
-import model.ChatUI;
 import model.ScoreUI;
 
 public class GameStage {
@@ -19,7 +18,6 @@ public class GameStage {
 	private Canvas canvas;
 	private GraphicsContext gc;
 	private GameTimer gametimer;
-	public ChatUI chat;
 	public ScoreUI score;
 
 	//the class constructor
@@ -29,7 +27,6 @@ public class GameStage {
 		canvas = new Canvas(GameMenu.WINDOW_WIDTH,GameMenu.WINDOW_HEIGHT);
 		gc = canvas.getGraphicsContext2D();
 		gametimer = new GameTimer(this.gc, this.scene, this);
-		chat = new ChatUI();
 		score = new ScoreUI(gametimer.getPlayer());
 	}
 
@@ -42,7 +39,7 @@ public class GameStage {
 
 		// for full screen
 		setFullScreen();
-		this.root.getChildren().addAll(canvas, chat.getPane(), score.getPane());
+		this.root.getChildren().addAll(canvas, score.getPane());
 		this.gametimer.start();
 		this.stage.show();
 	}

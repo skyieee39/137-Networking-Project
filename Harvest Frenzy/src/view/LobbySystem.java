@@ -9,10 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import app.ChatController;
+import view.GameStage;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -763,7 +766,10 @@ public class LobbySystem {
 		}
 		@FXML public void startGame(ActionEvent event)
 		{
-			System.out.println("Start game");
+			Stage stage = (Stage) buttonStartGame.getScene().getWindow();
+			GameStage gamestage = new GameStage();
+			gamestage.setStage(stage);
+			
 		}
 		
 		// MultiPlayer: Client callbacks

@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 public class ChatController {
 	private LobbySystem controller;
 	private FXMLLoader loader;
+	private Stage stage;
 	
 	public ChatController() {
 		this.loader = new FXMLLoader(Main.class.getResource("/view/ViewMultiplayer.fxml"));
@@ -18,15 +19,15 @@ public class ChatController {
 	}
 	
 	public void setStage(Stage stage) {
+		this.stage = stage;
 		try {
 			AnchorPane homeUtente = (AnchorPane) loader.load();
 			Scene scene = new Scene(homeUtente);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			stage.setTitle("JavaFX-MultiplayerLobbySystem");
-			stage.setScene(scene);
-			stage.setResizable(false);
-			stage.show();
-			//Sthis.controller = (LobbySystem) loader.getController();
+			this.stage.setTitle("Harvest Frenzy: Chat Lobby");
+			this.stage.setScene(scene);
+			this.stage.setResizable(false);
+			controller.setStage(stage);
 			
 		} catch(Exception e) {
 			e.printStackTrace();

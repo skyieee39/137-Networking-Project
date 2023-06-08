@@ -22,7 +22,7 @@ import model.chat.MessageType;
 
 public class ServerStream implements IServer{
 	
-	private static final int PORT = 1234;
+	private static final int PORT = 9001;
 	private int minToStartGame = 2;
 	private int maxNumUsers = 6;
 	private LobbySystem controller;

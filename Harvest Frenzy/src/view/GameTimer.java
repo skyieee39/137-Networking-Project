@@ -72,7 +72,8 @@ public class GameTimer extends AnimationTimer{
 		if (timeSec == 60) {
 			System.out.println("Time's up!");
 			this.stop();
-			System.exit(0);
+			GameOverScreen gover = new GameOverScreen(player.getScore());
+			gover.setStage(gs.getStage());
 		}
 	}
 
@@ -131,8 +132,7 @@ public class GameTimer extends AnimationTimer{
 		this.scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent e) {
-				// Will ignore any space key input while the player is currently in the typing state
-					if (!(e.getCode().equals(KeyCode.SPACE))) {
+				if (!(e.getCode().equals(KeyCode.SPACE) && player.getIsJumping())) {
 						player.move(e.getCode());
 				}
 			}

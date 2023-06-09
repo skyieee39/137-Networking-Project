@@ -61,4 +61,8 @@ public class GameStage {
 			stage.setFullScreen(false);
 		}
 	}
+	
+	public Stage getStage() {
+		return stage;
+	}
 }

@@ -40,6 +40,7 @@ public class GameMenu {
 	private GraphicsContext gc;
 	private VBox menuBox;
 	private CloudTimer cloudtimer;
+	private GameMenu gm;
 	List<HarFreButton> menuBtns;
 
 	// === CONSTRUCTOR ===
@@ -50,6 +51,7 @@ public class GameMenu {
 		canvas = new Canvas(WINDOW_WIDTH,WINDOW_HEIGHT);
 		gc = canvas.getGraphicsContext2D();
 		cloudtimer = new CloudTimer(gc);
+		gm = this;
 	}
 
 	// === STAGE SETUP ===
@@ -75,7 +77,7 @@ public class GameMenu {
 		initStartButton();
 		initInstructionButton();
 		initAboutButton();
-		initHelpButton();
+//		initHelpButton();
 		initExitButton();
 
 		// Add event handlers
@@ -109,10 +111,10 @@ public class GameMenu {
 		HarFreButton aboutbtn = new HarFreButton("ABOUT");
 		initMenuButtons(aboutbtn);
 	}
-	private void initHelpButton() {
-		HarFreButton helpbtn = new HarFreButton("HELP");
-		initMenuButtons(helpbtn);
-	}
+//	private void initHelpButton() {
+//		HarFreButton helpbtn = new HarFreButton("HELP");
+//		initMenuButtons(helpbtn);
+//	}
 	private void initExitButton() {
 		HarFreButton exitbtn = new HarFreButton("EXIT");
 		initMenuButtons(exitbtn);
@@ -128,7 +130,16 @@ public class GameMenu {
 					chatcontroller.setStage(stage);
 				}
 			});
-		} else if (btn.equals(menuBtns.get(4))){
+		}
+		else if (btn.equals(menuBtns.get(1))){
+            btn.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                public void handle(MouseEvent arg0) {
+                    InstructionsPage instruct = new InstructionsPage(gm);
+                    instruct.setStage(stage);
+                }
+            });
+        }
+		else if (btn.equals(menuBtns.get(3))){
 			btn.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				public void handle(MouseEvent arg0) {
 					System.exit(0);
